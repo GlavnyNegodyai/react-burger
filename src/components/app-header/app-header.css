@@ -1,0 +1,23 @@
+.header{
+    background-color: #1C1C21;
+}
+
+.header__content-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.header-nav{
+    display: flex;
+    gap: 8px;
+}
+.header-element{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 20px;
+}

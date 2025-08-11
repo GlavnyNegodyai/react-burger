@@ -1,0 +1,13 @@
+.modal{
+    max-width: 720px;
+    width: 100%;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    box-sizing: border-box;
+}
+
+.modal-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

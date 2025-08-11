@@ -1,0 +1,30 @@
+.burger-constructor{
+    padding: 100px 0 0 16px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.burger-constructor__undraggable-element{
+    margin-right: 16px;
+}
+
+.burger-constructor__draggables-list{
+    list-style: none;
+    margin: 16px 0;
+    padding: 0;
+    overflow-y: scroll;
+    max-height: 50vh;
+}
+
+.burger-constructor__draggable-element:not(:last-child){
+    margin-bottom: 16px;
+}
+
+.burger-constructor__bottom{
+    margin: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+

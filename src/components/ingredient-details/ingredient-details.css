@@ -1,0 +1,25 @@
+.modal__ingredient-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.modal__ingredient-picture{
+    max-width: 520px;
+    width: auto;
+    height: 240px;
+}
+
+.modal__ingredient-macros{
+    display: flex;
+    gap: 20px;
+}
+
+.modal__ingredient-macro{
+    text-align: center;
+}
+
+.modal__ingredient-macro-name{
+    margin: 0;
+}
