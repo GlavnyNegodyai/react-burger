@@ -1,9 +1,9 @@
 import React from 'react';
 import './modal-overlay.css';
 
-const ModalOverlay = ({children, isModalOpened}) => {
+const ModalOverlay = ({children}) => {
     return(
-        <div id='modal-overlay' className='modal-overlay' style={!isModalOpened ? {display: 'none'} : {}}>
+        <div id='modal-overlay' className='modal-overlay'>
             {children}
         </div>
     );

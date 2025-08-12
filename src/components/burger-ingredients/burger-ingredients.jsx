@@ -3,6 +3,7 @@ import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
+import Modal from '../modal/modal.jsx';
 import './burger-ingredients.css';
 
 
@@ -38,9 +39,9 @@ const BurgerIngredientCard = ({ingredient, onIngredientSelect, onBunSelect, hand
             <h3 className='ingredient-name text text_type_main-default'>{name}</h3>
 
         </div>
-            {isCardClicked && 
-                <IngredientDetails ingredient={ingredient} onModalClose={onModalClose}/>
-            }
+            <Modal onClose={onModalClose} headerText='Детали ингредиента' isModalOpened={isCardClicked}>
+                <IngredientDetails ingredient={ingredient}/>
+            </Modal>
         </>
     );
 }

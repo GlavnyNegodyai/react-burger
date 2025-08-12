@@ -2,8 +2,8 @@ import React from 'react';
 import {useState} from 'react';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details.jsx';
+import Modal from '../modal/modal.jsx';
 import './burger-constructor.css';
-import doneImage from '../../images/done.png';
 
 const BurgerConstructor = ({selectedBun, selectedIngredients, handleModal}) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
@@ -58,10 +58,9 @@ const BurgerConstructor = ({selectedBun, selectedIngredients, handleModal}) => {
                     Оформить заказ
                 </Button>
             </div>
-            {isButtonClicked && 
-                <OrderDetails onModalClose={onModalClose}/>
-            }
-
+                <Modal onClose={onModalClose} headerText='' isModalOpened={isButtonClicked}>
+                    <OrderDetails/>
+                </Modal>
         </section>
     );
 };

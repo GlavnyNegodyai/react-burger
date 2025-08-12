@@ -1,10 +1,10 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import AppHeader from './components/app-header/app-header.jsx';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients.jsx';
-import BurgerConstructor from './components/burger-constructor/burger-constructor.jsx';
-import ModalOverlay from './components/modal-overlay/modal-overlay.jsx';
-import './App.css';
+import AppHeader from '../app-header/app-header.jsx';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
+import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
+import ModalOverlay from '../modal-overlay/modal-overlay.jsx';
+import styles from './app.module.css';
 
 function App() {
   const [ingredients, setIngredients] = useState();
@@ -16,10 +16,18 @@ function App() {
 
   useEffect(() => {
     fetch('https://norma.nomoreparties.space/api/ingredients')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         if (data.success) {
           setIngredients(data.data);
+        }
+        else {
+          throw new Error('Полученные от сервера данные некорректны.')
         }
       })
       .catch(err => setError(err.message))
@@ -43,14 +51,14 @@ function App() {
 
   return (
     <>
-    <div className='page-wrapper'>
+    <div>
       <AppHeader/>
-      <main className='burger-constructor-main'>
+      <main className={styles.main}>
         <BurgerIngredients ingredients={ingredients} onIngredientSelect={addItemToConstructor} onBunSelect={changeSelectedBun} handleModal={handleModal}/>
         <BurgerConstructor selectedBun={selectedBun} selectedIngredients={selectedItems} handleModal={handleModal}/>
       </main>
     </div>
-    <ModalOverlay isModalOpened={isModalOpened}/>
+    <ModalOverlay isModalOpened={isModalOpened} handleModal={handleModal}/>
     </>
   );
 }

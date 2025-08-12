@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from '../modal/modal.jsx';
 import './ingredient-details.css';
 
 
@@ -12,21 +11,19 @@ const IngredientMacro = ({macroName, macroNumber}) => {
     )
 }
 
-const IngredientDetails = ({onModalClose,  ingredient}) => {
+const IngredientDetails = ({ingredient}) => {
     const {name, calories, proteins, fat, carbohydrates, image_large} = ingredient;
     return(
-        <Modal headerText='Детали ингредиента' onClose={onModalClose}>
-            <div className='modal__ingredient-content'>
-                <img src={image_large} alt={name} className='modal__ingredient-picture'/>
-                <h3 className='text text_type_main-medium pt-4 pb-8'>{name}</h3>
-                <div className='modal__ingredient-macros text text_type_main-default text_color_inactive'>
-                    <IngredientMacro macroName='Калории, ккал' macroNumber={calories}/>
-                    <IngredientMacro macroName='Белки, г' macroNumber={proteins}/>
-                    <IngredientMacro macroName='Жиры, г' macroNumber={fat}/>
-                    <IngredientMacro macroName='Углеводы, г' macroNumber={carbohydrates}/>
-                </div>
+        <div className='modal__ingredient-content'>
+            <img src={image_large} alt={name} className='modal__ingredient-picture'/>
+            <h3 className='text text_type_main-medium pt-4 pb-8'>{name}</h3>
+            <div className='modal__ingredient-macros text text_type_main-default text_color_inactive'>
+                <IngredientMacro macroName='Калории, ккал' macroNumber={calories}/>
+                <IngredientMacro macroName='Белки, г' macroNumber={proteins}/>
+                <IngredientMacro macroName='Жиры, г' macroNumber={fat}/>
+                <IngredientMacro macroName='Углеводы, г' macroNumber={carbohydrates}/>
             </div>
-        </Modal>
+        </div>
     )
 }
 
