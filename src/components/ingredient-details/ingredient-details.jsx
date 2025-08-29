@@ -1,5 +1,6 @@
 import React from 'react';
 import './ingredient-details.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const IngredientMacro = ({macroName, macroNumber}) => {
@@ -11,8 +12,12 @@ const IngredientMacro = ({macroName, macroNumber}) => {
     )
 }
 
-const IngredientDetails = ({ingredient}) => {
-    const {name, calories, proteins, fat, carbohydrates, image_large} = ingredient;
+const IngredientDetails = () => {
+    const {name, calories, proteins, fat, carbohydrates, image_large} = useSelector(store => ({
+        ...store.ingredientDetailsReducer.ingredient
+    }));
+    
+    
     return(
         <div className='modal__ingredient-content'>
             <img src={image_large} alt={name} className='modal__ingredient-picture'/>
@@ -24,6 +29,7 @@ const IngredientDetails = ({ingredient}) => {
                 <IngredientMacro macroName='Углеводы, г' macroNumber={carbohydrates}/>
             </div>
         </div>
+        
     )
 }
 

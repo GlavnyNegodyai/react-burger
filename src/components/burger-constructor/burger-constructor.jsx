@@ -4,8 +4,15 @@ import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-deve
 import OrderDetails from '../order-details/order-details.jsx';
 import Modal from '../modal/modal.jsx';
 import './burger-constructor.css';
+import { useDrop } from 'react-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    handleCardDrop,
+    CONSTRUCTOR_CLEAR,
+    CONSTRUCTOR_REMOVE_INGREDIENT
+} from '../../services/actions/burger-constructor.js';
 
-const BurgerConstructor = ({selectedBun, selectedIngredients, handleModal}) => {
+const BurgerConstructor = ({ handleModal}) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
 
     const onButtonClick = () => {
@@ -18,8 +25,22 @@ const BurgerConstructor = ({selectedBun, selectedIngredients, handleModal}) => {
         handleModal();
     }
 
+    const dispatch = useDispatch();
+
+    const [, dropRef] = useDrop({
+        accept: 'ingredient',
+        drop(item) {
+            dispatch(handleCardDrop(item));
+        },
+    });
+
+    const {selectedIngredients, selectedBun} = useSelector(store => ({
+        selectedIngredients: store.constructorReducer.constructorItems,
+        selectedBun: store.constructorReducer.constructorBun
+    }) )
+
     return(
-        <section className='burger-constructor'>
+        <section className='burger-constructor' ref={dropRef}>
             <div className='burger-constructor__undraggable-element'>
                 {selectedBun && <ConstructorElement
                     type="top"
