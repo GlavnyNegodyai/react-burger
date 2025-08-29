@@ -1,10 +1,10 @@
-export const FETCH_INGREDIENTS_REQUEST = 'FETCH_INGREDIENTS_REQUEST';
-export const FETCH_INGREDIENTS_SUCCESS = 'FETCH_INGREDIENTS_SUCCESS';
-export const FETCH_INGREDIENTS_FAIL = 'FETCH_INGREDIENTS_FAIL';
+export const BURGER_INGREDIENTS_FETCH_REQUEST = 'BURGER_INGREDIENTS_FETCH_REQUEST';
+export const BURGER_INGREDIENTS_FETCH_SUCCESS = 'BURGER_INGREDIENTS_FETCH_SUCCESS';
+export const BURGER_INGREDIENTS_FETCH_FAIL = 'BURGER_INGREDIENTS_FETCH_FAIL';
 
-const fetchRequest = () => ({type: FETCH_INGREDIENTS_REQUEST});
-const fetchSuccess = (items) => ({type: FETCH_INGREDIENTS_SUCCESS, payload: items});
-const fetchError = (error) => ({type: FETCH_INGREDIENTS_FAIL, payload: error});
+const fetchRequest = () => ({type: BURGER_INGREDIENTS_FETCH_REQUEST});
+const fetchSuccess = (items) => ({type: BURGER_INGREDIENTS_FETCH_SUCCESS, payload: items});
+const fetchError = (error) => ({type: BURGER_INGREDIENTS_FETCH_FAIL, payload: error});
 
 
 export const fetchIngredients = () => async (dispatch) => {

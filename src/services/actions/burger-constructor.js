@@ -15,3 +15,9 @@ export const handleCardDrop = (item) => (dispatch, getState) => {
         payload: ingredient
     });
 }
+
+export const handleRemoveIngredient = (indexToRemove) => (dispatch, getState) => {
+    const constructorItems = getState().constructorReducer.constructorItems;
+    const newConstructorItems = constructorItems.filter((element, index) => index !== indexToRemove);
+    dispatch({type: CONSTRUCTOR_REMOVE_INGREDIENT, payload: newConstructorItems});
+}

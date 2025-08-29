@@ -1,6 +1,6 @@
-import {FETCH_INGREDIENTS_FAIL, 
-        FETCH_INGREDIENTS_SUCCESS, 
-        FETCH_INGREDIENTS_REQUEST} 
+import {BURGER_INGREDIENTS_FETCH_FAIL, 
+        BURGER_INGREDIENTS_FETCH_SUCCESS, 
+        BURGER_INGREDIENTS_FETCH_REQUEST} 
 from '../actions/burger-ingredients';
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_INGREDIENTS_REQUEST: {
+        case BURGER_INGREDIENTS_FETCH_REQUEST: {
             return {
                 ...state, 
                 fetchLoading: true,
@@ -19,7 +19,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ingredients: []
             }
         };
-        case FETCH_INGREDIENTS_SUCCESS: {
+        case BURGER_INGREDIENTS_FETCH_SUCCESS: {
             return {
                 ...state,
                 fetchLoading: false,
@@ -27,7 +27,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ingredients: action.payload
             }
         };
-        case FETCH_INGREDIENTS_FAIL: {
+        case BURGER_INGREDIENTS_FETCH_FAIL: {
             return {
                 ...state,
                 fetchLoading: false,

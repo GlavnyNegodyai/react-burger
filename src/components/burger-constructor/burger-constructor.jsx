@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details.jsx';
 import Modal from '../modal/modal.jsx';
@@ -8,11 +8,10 @@ import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     handleCardDrop,
-    CONSTRUCTOR_CLEAR,
-    CONSTRUCTOR_REMOVE_INGREDIENT
+    handleRemoveIngredient,
 } from '../../services/actions/burger-constructor.js';
 
-const BurgerConstructor = ({ handleModal}) => {
+const BurgerConstructor = ({ handleModal }) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
 
     const onButtonClick = () => {
@@ -39,6 +38,15 @@ const BurgerConstructor = ({ handleModal}) => {
         selectedBun: store.constructorReducer.constructorBun
     }) )
 
+    const countPrice =  useMemo(() => {
+        let priceCounter = 0;
+        selectedIngredients.map((priceCountIngredient) => {
+            priceCounter = priceCounter + priceCountIngredient.price;
+        });
+        priceCounter = priceCounter + (selectedBun ? selectedBun.price * 2: 0);
+        return priceCounter;
+    }, [selectedIngredients, selectedBun]);
+
     return(
         <section className='burger-constructor' ref={dropRef}>
             <div className='burger-constructor__undraggable-element'>
@@ -57,6 +65,7 @@ const BurgerConstructor = ({ handleModal}) => {
                         text={ingredient.name}
                         price={ingredient.price}
                         thumbnail={ingredient.image}
+                        handleClose={() => dispatch(handleRemoveIngredient(index))}
                     />
                 </li>
                 ))}
@@ -72,7 +81,7 @@ const BurgerConstructor = ({ handleModal}) => {
             </div>}
             <div className='burger-constructor__bottom'>
                 <p className='text text_type_digits-medium p-1'>
-                    <span className='ingredient-price__number'>1000&nbsp;</span>
+                    <span className='ingredient-price__number'>{countPrice}&nbsp;</span>
                     <CurrencyIcon type="primary" />
                 </p>
                 <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick}>

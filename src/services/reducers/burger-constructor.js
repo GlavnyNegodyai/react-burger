@@ -23,7 +23,7 @@ export function constructorReducer(state = initialState, action){
         case CONSTRUCTOR_REMOVE_BUN: {
             return {
                 ...state,
-                constructorItems: null
+                constructorBun: null
             }
         }
         case CONSTRUCTOR_ADD_INGREDIENT: {

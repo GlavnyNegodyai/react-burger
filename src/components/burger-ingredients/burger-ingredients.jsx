@@ -16,6 +16,16 @@ const BurgerIngredientCard = ({ingredient, handleModal}) => {
     const [isCardClicked, setCardClicked] = useState(false);
     const dispatch = useDispatch();
 
+    const {constructorItems, constructorBun} = useSelector(store => ({
+        constructorItems: store.constructorReducer.constructorItems,
+        constructorBun: store.constructorReducer.constructorBun
+    }));
+
+    const handleIngredientCount = () => {
+        const arrayToCount = type === 'bun' ? (constructorBun ? [constructorBun]: []) : (constructorItems || []);
+        return arrayToCount.filter(item => item._id === _id).length;
+    }
+
     const onModalClose = () => {
             setCardClicked(false);
             dispatch({type: REMOVE_INGREDIENT_DETAILS});
@@ -38,7 +48,7 @@ const BurgerIngredientCard = ({ingredient, handleModal}) => {
     return(
         <>
         <div className='ingredient-card' onClick={onCardClick} ref={dragRef}>
-            {clickCount !== 0 && <Counter count={clickCount} size="default" extraClass="m-1" />}
+            {handleIngredientCount() !== 0 && <Counter count={handleIngredientCount()} size="default" extraClass="m-1" />}
             <img src={image} alt={name} className='ingredient-picture'/>
             <p className='ingredient-price text text_type_digits-default p-1'>
                 <span className='ingredient-price__number'>{price.toLocaleString()}&nbsp;</span>
