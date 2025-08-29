@@ -1,0 +1,15 @@
+.modal-order__bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-order__number{
+    text-shadow: 0px 4px 32px #3333FF80, 0px 0px 8px #3333FF40, 0px 0px 16px #3333FF40;
+}
+
+.modal-order__image{
+    width: 120px;
+    height: 120px;
+}
