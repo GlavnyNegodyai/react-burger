@@ -45,6 +45,13 @@ export function constructorReducer(state = initialState, action){
                 constructorBun: null
             }
         }
+        case CONSTRUCTOR_MOVE: {
+            return{
+                ...state, 
+                constructorItems: action.payload
+            }
+        }
+
         default:
             return state;
     }
