@@ -12,14 +12,16 @@ import './burger-ingredients.css';
 
 const BurgerIngredientCard = ({ingredient, handleModal}) => {
     const {name, image, price, type, _id} = ingredient;
-    const [clickCount, setClickCount] = useState(0);
     const [isCardClicked, setCardClicked] = useState(false);
     const dispatch = useDispatch();
 
-    const {constructorItems, constructorBun} = useSelector(store => ({
-        constructorItems: store.constructorReducer.constructorItems,
-        constructorBun: store.constructorReducer.constructorBun
-    }));
+    const constructorItems = useSelector(
+        store => store.constructorReducer.constructorItems
+    );
+
+    const constructorBun = useSelector(
+        store => store.constructorReducer.constructorBun
+    );
 
     const handleIngredientCount = () => {
         const arrayToCount = type === 'bun' ? (constructorBun ? [constructorBun]: []) : (constructorItems || []);

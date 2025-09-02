@@ -23,7 +23,8 @@ export function orderReducer(state = initialState, action){
             return{
                 ...state,
                 sendOrderLoading: false,
-                sendOrderError: true
+                sendOrderError: true,
+                orderDetails: null
             }
         }
         case CONSTRUCTOR_SEND_ORDER_SUCCESS: {

@@ -11,29 +11,26 @@ const initialState = {
 
 export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case BURGER_INGREDIENTS_FETCH_REQUEST: {
+        case BURGER_INGREDIENTS_FETCH_REQUEST:
             return {
                 ...state, 
                 fetchLoading: true,
                 fetchError: null,
                 ingredients: []
-            }
-        };
-        case BURGER_INGREDIENTS_FETCH_SUCCESS: {
+            };
+        case BURGER_INGREDIENTS_FETCH_SUCCESS:
             return {
                 ...state,
                 fetchLoading: false,
                 fetchError: null,
                 ingredients: action.payload
-            }
-        };
-        case BURGER_INGREDIENTS_FETCH_FAIL: {
+            };
+        case BURGER_INGREDIENTS_FETCH_FAIL:
             return {
                 ...state,
                 fetchLoading: false,
                 fetchError: action.payload
-            }
-        };
+            };
         default:
             return state;
     }

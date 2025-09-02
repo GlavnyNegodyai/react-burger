@@ -60,7 +60,6 @@ const BurgerConstructor = ({ handleModal }) => {
         await dispatch(sendOrder());
         setButtonClicked(true);
         handleModal();
-        
     }
     
     const onModalClose = () => {
@@ -105,7 +104,7 @@ const BurgerConstructor = ({ handleModal }) => {
             </div>
             <ul className='burger-constructor__draggables-list'>
                 {(selectedIngredients || []).map((ingredient, index) => (
-                    <DraggableConstructorElement key={index} ingredient={ingredient} draggableIndex={index}></DraggableConstructorElement>
+                    <DraggableConstructorElement key={ingredient.uid} ingredient={ingredient} draggableIndex={index}/>
                 ))}
             </ul>
             {selectedBun && <div className='burger-constructor__undraggable-element'>

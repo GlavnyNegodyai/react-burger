@@ -1,6 +1,6 @@
 import React from 'react';
 import './ingredient-details.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 const IngredientMacro = ({macroName, macroNumber}) => {
