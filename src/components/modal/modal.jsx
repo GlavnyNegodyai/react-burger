@@ -5,7 +5,6 @@ import './modal.css';
 import {CloseIcon} from  '@ya.praktikum/react-developer-burger-ui-components';
 
 const Modal = ({onClose, headerText, children, isModalOpened}) => {
-
   const handleCloseClick = (event) => {
     if (event.target === event.currentTarget || event.target.closest('.modal-close')) {
       onClose();
