@@ -1,0 +1,16 @@
+.main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 180px 0;
+    gap: 60px;
+}
+
+.nav-links-wrapper{}
+
+.nav-links{
+    display: flex;
+    flex-direction: column;
+}
+

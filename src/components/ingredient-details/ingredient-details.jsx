@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ingredient-details.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ADD_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details.js';
+import { fetchIngredients } from '../../services/actions/burger-ingredients.js';
+
 
 
 const IngredientMacro = ({macroName, macroNumber}) => {
@@ -13,12 +17,48 @@ const IngredientMacro = ({macroName, macroNumber}) => {
 }
 
 const IngredientDetails = () => {
-    const {name, calories, proteins, fat, carbohydrates, image_large} = useSelector(store => ({
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const {ingredients, loading, error} = useSelector(store => ({
+        ingredients: store.ingredientsReducer.ingredients,
+        loading: store.ingredientsReducer.fetchLoading,
+        error: store.ingredientsReducer.fetchError
+    }));
+
+    const ingredient = useSelector(store => ({
         ...store.ingredientDetailsReducer.ingredient
     }));
-    
+
+    const {name, calories, proteins, fat, carbohydrates, image_large} = ingredient;
+
+    useEffect(() => {
+        dispatch(fetchIngredients());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!loading && ingredients.length > 0){
+            const ingredientByUrl = ingredients.find(ingredient => ingredient._id === id);
+            if (ingredientByUrl){
+                dispatch({type: ADD_INGREDIENT_DETAILS, payload: ingredientByUrl});
+            }
+            /*else(
+                navigate('/page-not-found')
+            );*/
+        }
+
+    }, [dispatch, id, ingredients, loading, navigate]);
+
+    if (loading){
+        return <p>Загрузка</p>
+    }
+    if (error){
+        return <p>Ошибка: {ingredients.error}</p>
+    }
     
     return(
+        
         <div className='modal__ingredient-content'>
             <img src={image_large} alt={name} className='modal__ingredient-picture'/>
             <h3 className='text text_type_main-medium pt-4 pb-8'>{name}</h3>

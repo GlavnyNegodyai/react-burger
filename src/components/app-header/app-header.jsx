@@ -1,6 +1,7 @@
 import React from 'react';
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import './app-header.css';
+import { NavLink } from 'react-router-dom';
 
 const AppHeader = () => {
     return(
@@ -9,17 +10,23 @@ const AppHeader = () => {
             <nav className='header-nav'>
                 <div className='header-element'>
                     <BurgerIcon type='primary'/>
-                    <span className='text text_type_main-default'>Конструктор</span>
+                    <NavLink to="/" className={({ isActive }) =>
+                        `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}
+                    >Конструктор</NavLink>
                 </div>
                 <div className='header-element'>
                     <ListIcon type='secondary' />
-                    <span className='text text_type_main-default'>Лента заказов</span>
+                    <NavLink to="/profile/orders" className={({ isActive }) =>
+                        `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}
+                    >Лента заказов</NavLink>
                 </div>
             </nav>
             <Logo />
             <div className='header-element'>
                 <ProfileIcon type='secondary' />
-                <span className='text text_type_main-default'>Конструктор</span>
+                <NavLink to="/profile" end className={({ isActive }) =>
+                        `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}
+                >Личный кабинет</NavLink>
             </div>
             </div>
         </header>

@@ -1,5 +1,6 @@
 .header{
     background-color: #1C1C21;
+    flex-grow: 1;
 }
 
 .header__content-wrapper{
@@ -20,4 +21,14 @@
     align-items: center;
     gap: 8px;
     padding: 16px 20px;
+}
+
+a.text{
+    text-decoration: none;
+    color: white;
+}
+
+a.text.text_color_inactive {
+    color: #8585AD;
+
 }

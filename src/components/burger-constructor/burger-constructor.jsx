@@ -55,11 +55,16 @@ const BurgerConstructor = ({ handleModal }) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
     const dispatch = useDispatch();
 
+    const isOrderAllowed = useSelector(store => (
+        store.userReducer.isUserLoggedIn
+    ));
 
     const onButtonClick = async () => {
-        await dispatch(sendOrder());
-        setButtonClicked(true);
-        handleModal();
+        if(isOrderAllowed){
+            await dispatch(sendOrder());
+            setButtonClicked(true);
+            handleModal();
+        }
     }
     
     const onModalClose = () => {
@@ -80,7 +85,7 @@ const BurgerConstructor = ({ handleModal }) => {
     const {selectedIngredients, selectedBun} = useSelector(store => ({
         selectedIngredients: store.constructorReducer.constructorItems,
         selectedBun: store.constructorReducer.constructorBun
-    }) )
+    }) );
 
     const countPrice = useMemo(() => {
     const ingredientsPrice = selectedIngredients.reduce(
@@ -89,7 +94,6 @@ const BurgerConstructor = ({ handleModal }) => {
     );
     return ingredientsPrice + (selectedBun ? selectedBun.price * 2 : 0);
     }, [selectedIngredients, selectedBun]);
-
 
     return(
         <section className='burger-constructor' ref={dropRef}>
@@ -121,7 +125,7 @@ const BurgerConstructor = ({ handleModal }) => {
                     <span className='ingredient-price__number'>{countPrice}&nbsp;</span>
                     <CurrencyIcon type="primary" />
                 </p>
-                <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick}>
+                <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick} disabled={!isOrderAllowed}>
                     Оформить заказ
                 </Button>
             </div>
