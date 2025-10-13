@@ -1,4 +1,5 @@
 import {getAccessToken, updateTokens, removeAccessToken, removeRefreshToken } from '../../utils/auth-cookies.js';
+import { BASE_URL } from '../../utils/base-url.js';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';
@@ -13,7 +14,7 @@ const userRemove = () => ({type: USER_REMOVE});
 export const getUser = () => async (dispatch) => {
     dispatch(userRequest());
     try{
-        const response = await fetch('https://norma.nomoreparties.space/api/auth/user',
+        const response = await fetch(`${BASE_URL}/auth/user`,
             {
                 method: 'GET',
                 headers: {
@@ -32,7 +33,7 @@ export const getUser = () => async (dispatch) => {
         if (data.message === 'jwt expired' || data.message === 'jwt malformed'){
             const newToken = await updateTokens();
 
-            const retryResponse = await fetch('https://norma.nomoreparties.space/api/auth/user',
+            const retryResponse = await fetch(`${BASE_URL}/auth/user`,
                 {
                     method: 'GET',
                     headers: {
@@ -68,13 +69,12 @@ export const getUser = () => async (dispatch) => {
         console.error(error);
         dispatch(userError(error.message));
     };
-
 };
 
 export const updateUser = (email, name) => async (dispatch) => {
     dispatch(userRequest());
     try{
-        const response = await fetch('https://norma.nomoreparties.space/api/auth/user',
+        const response = await fetch(`${BASE_URL}/auth/user`,
             {
                 method: 'PATCH',
                 headers: {
@@ -97,7 +97,7 @@ export const updateUser = (email, name) => async (dispatch) => {
         if (data.message === 'jwt expired' || data.message === 'jwt malformed'){
             const newToken = await updateTokens();
 
-            const retryResponse = await fetch('https://norma.nomoreparties.space/api/auth/user',
+            const retryResponse = await fetch(`${BASE_URL}/auth/user`,
                 {
                     method: 'GET',
                     headers: {

@@ -1,4 +1,6 @@
 import Cookies from 'js-cookie';
+import { BASE_URL } from './base-url.js';
+import { checkResponse } from './check-response.js';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
@@ -47,7 +49,7 @@ export const removeRefreshToken  = () => {
 
 export const updateTokens = async () => {
     try{
-        const response = await fetch('https://norma.nomoreparties.space/api/auth/token',
+        const response = await fetch(`${BASE_URL}/auth/token`,
         {
             method: 'POST',
             headers: {
@@ -58,15 +60,7 @@ export const updateTokens = async () => {
             }),
         });
 
-        if (!response.ok){
-            throw new Error('Ошибка', response.status, response.statusText);
-        }
-
-        const data = await response.json();
-
-        if (!data.success){
-            throw new Error('Не удалось обновить токен');
-        }
+        const data = await checkResponse(response);
 
         const newAccessToken = data.accessToken.replace('Bearer ', '');
         const newRefreshToken = data.refreshToken;

@@ -6,12 +6,14 @@ import Modal from '../modal/modal.jsx';
 import './burger-constructor.css';
 import { useDrop, useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     handleCardDrop,
     handleRemoveIngredient,
     handleMoveConstructorElement
 } from '../../services/actions/burger-constructor.js';
 import { sendOrder } from '../../services/actions/order-details.js';
+import { getRefreshToken } from '../../utils/auth-cookies.js';
 
 
 const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
@@ -54,18 +56,8 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
 const BurgerConstructor = ({ handleModal }) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
     const dispatch = useDispatch();
-
-    const isOrderAllowed = useSelector(store => (
-        store.userReducer.isUserLoggedIn
-    ));
-
-    const onButtonClick = async () => {
-        if(isOrderAllowed){
-            await dispatch(sendOrder());
-            setButtonClicked(true);
-            handleModal();
-        }
-    }
+    const navigate = useNavigate();
+    const token = getRefreshToken();
     
     const onModalClose = () => {
         setButtonClicked(false);
@@ -86,6 +78,19 @@ const BurgerConstructor = ({ handleModal }) => {
         selectedIngredients: store.constructorReducer.constructorItems,
         selectedBun: store.constructorReducer.constructorBun
     }) );
+
+    const onButtonClick = async () => {
+        if(!token || token === ''){
+            navigate('/login');
+        }
+        else{
+            if(selectedIngredients.some(ing => ing) || selectedBun){
+                await dispatch(sendOrder());
+                setButtonClicked(true);
+                handleModal();
+            }
+        }
+    }
 
     const countPrice = useMemo(() => {
     const ingredientsPrice = selectedIngredients.reduce(
@@ -125,7 +130,7 @@ const BurgerConstructor = ({ handleModal }) => {
                     <span className='ingredient-price__number'>{countPrice}&nbsp;</span>
                     <CurrencyIcon type="primary" />
                 </p>
-                <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick} disabled={!isOrderAllowed}>
+                <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick}>
                     Оформить заказ
                 </Button>
             </div>

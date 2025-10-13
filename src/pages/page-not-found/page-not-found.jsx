@@ -1,12 +1,10 @@
 import React from 'react';
-import AppHeader from '../../components/app-header/app-header.jsx';
 import './page-not-found.css';
 import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
     return(
     <>
-        <AppHeader/>
         <main className="main--error">
             <section className='mt-25 error-section'>
                 <h1 className='error-message text text_type_main-large'>

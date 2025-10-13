@@ -11,9 +11,9 @@ import {
   ForgotPassword,
   Orders
 } from '../../pages';
+import AppHeader from '../app-header/app-header.jsx';
 import { ModalWindow } from '../modal-window/modal-window.jsx';
 import { ProtectedRouteElement } from '../protected-route/protected-route.jsx';
-import styles from './app.module.css';
 
 function App() {
   const location = useLocation();
@@ -27,10 +27,12 @@ function App() {
   };
   return (
     <>
+      <AppHeader/>
       <Routes location={background || location}>
         <Route path='/' element={<Constructor handleModal={handleModal}/>}/>
 
-        <Route path='/login' element={
+        <Route path='/login' element=
+        {
           <ProtectedRouteElement isNotForAuthorized={true}>
             <Login />
           </ProtectedRouteElement>
@@ -59,9 +61,10 @@ function App() {
             <Profile />
           </ProtectedRouteElement>}/>
 
-        <Route path='/ingredients/:id' element={
+        <Route path='/ingredients/:id' element=
+        {
           <IngredientPage />
-          }/>
+        }/>
 
         <Route path='/profile/orders' element=
         {

@@ -1,3 +1,6 @@
+import {BASE_URL} from '../../utils/base-url.js';
+import { checkResponse } from '../../utils/check-response.js';
+
 export const FORGOT_PASSWORD_POST_REQUEST = 'FORGOT_PASSWORD_POST_REQUEST';
 export const FORGOT_PASSWORD_POST_SUCCESS = 'FORGOT_PASSWORD_POST_SUCCESS';
 export const FORGOT_PASSWORD_POST_FAIL = 'FORGOT_PASSWORD_POST_FAIL';
@@ -9,34 +12,22 @@ const emailPostError = (error) => ({type: FORGOT_PASSWORD_POST_FAIL, payload: er
 export const emailPost = (userEmail, navigate) => async (dispatch) => {
     dispatch(emailPostRequest());
     try {
-        const res = await fetch('https://norma.nomoreparties.space/api/password-reset', {
+        const res = await fetch(`${BASE_URL}/password-reset`, {
             method: "POST",
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
             body: JSON.stringify({
                 email: userEmail
             }),
               headers: {
                 "Content-type": "application/json"
             },
-            referrerPolicy: 'no-referrer'
         });
 
-        const data = await res.json();
+        const data = await checkResponse(res);
 
-        if (!res.ok) {
-        throw new Error(`Ошибка: ${res.status} "${data.message}"`);
-        }
-
-        if (data.success) {
-          dispatch(emailPostSuccess(data.message));
-          navigate('/reset-password', {state: {fromForgotPassword: true}});
-        }
-        else {
-          throw new Error(`Ошибка: ${data.message}`)
-        }
-    } catch (err) {
+        dispatch(emailPostSuccess(data.message));
+        navigate('/reset-password', {state: {fromForgotPassword: true}});
+    
+      } catch (err) {
         dispatch(emailPostError(err.message));
     }
 }

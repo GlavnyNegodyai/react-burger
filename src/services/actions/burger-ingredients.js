@@ -1,3 +1,6 @@
+import {BASE_URL} from '../../utils/base-url.js';
+import { checkResponse } from '../../utils/check-response.js';
+
 export const BURGER_INGREDIENTS_FETCH_REQUEST = 'BURGER_INGREDIENTS_FETCH_REQUEST';
 export const BURGER_INGREDIENTS_FETCH_SUCCESS = 'BURGER_INGREDIENTS_FETCH_SUCCESS';
 export const BURGER_INGREDIENTS_FETCH_FAIL = 'BURGER_INGREDIENTS_FETCH_FAIL';
@@ -10,20 +13,12 @@ const fetchError = (error) => ({type: BURGER_INGREDIENTS_FETCH_FAIL, payload: er
 export const fetchIngredients = () => async (dispatch) => {
     dispatch(fetchRequest());
     try {
-        const res = await fetch('https://norma.nomoreparties.space/api/ingredients');
+        const res = await fetch(`${BASE_URL}/ingredients`);
 
-        if (!res.ok) {
-        throw new Error(`Ошибка: ${res.status}`);
-        }
+        const data = await checkResponse(res);
 
-        const data = await res.json();
+        dispatch(fetchSuccess(data.data));
 
-        if (data.success) {
-          dispatch(fetchSuccess(data.data));
-        }
-        else {
-          throw new Error('Полученные от сервера данные некорректны.')
-        }
     } catch (err) {
         dispatch(fetchError(err.message));
     }

@@ -9,7 +9,6 @@ const initialState = {
     user: {},
     isUserLoading: false,
     userError: null,
-    isUserLoggedIn: false
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -25,20 +24,17 @@ export const userReducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload,
                 isUserLoading: false,
-                isUserLoggedIn: true
             }
         case USER_FAIL: 
             return{
                 ...state,
                 isUserLoading: false,
                 userError: action.payload,
-                isUserLoggedIn: false
             }
         case USER_REMOVE: 
             return{
                 ...state,
-                user: {},
-                isUserLoggedIn: false
+                user: {}
             }
         default: return state;
     }

@@ -1,5 +1,6 @@
 import { setAccessToken, setRefreshToken } from '../../utils/auth-cookies.js';
-import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../utils/base-url.js';
+import { checkResponse } from '../../utils/check-response.js';
 
 export const LOGIN_POST_REQUEST = 'LOGIN_POST_REQUEST';
 export const LOGIN_POST_SUCCESS = 'LOGIN_POST_SUCCESS';
@@ -9,40 +10,29 @@ const loginUserRequest = () => ({type: LOGIN_POST_REQUEST});
 const loginUserSuccess = () => ({type: LOGIN_POST_SUCCESS});
 const loginUserError = (error) => ({type: LOGIN_POST_FAIL, payload: error});
 
-export const loginUser = ({userEmail, userPassword, fromPage}, navigate) => async (dispatch) => {
+export const loginUser = ({email, password, fromPage}, navigate) => async (dispatch) => {
     dispatch(loginUserRequest());
+
     try {
         const res = await fetch(
-            'https://norma.nomoreparties.space/api/auth/login',
+            `${BASE_URL}/auth/login`,
             {
                 method: "POST",
-                mode: 'cors',
-                cache: 'no-cache',
-                body: JSON.stringify({
-                    email: userEmail,
-                    password: userPassword
-                }),
                 headers: {
-                    "Content-type": "application/json"
+                    "Content-Type": "application/json;charset=utf-8"
                 },
-                referrerPolicy: 'no-referrer'
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
             });
-
-        if (!res.ok) {
-            throw new Error(`Ошибка: ${res.status}`);
-        }
-
-        const data = await res.json();
+            
+        const data = await checkResponse(res);
         
-        if (data.success) {
-            dispatch(loginUserSuccess());
-            setAccessToken(data.accessToken.replace('Bearer ', ''));
-            setRefreshToken(data.refreshToken);
-            navigate(fromPage);
-        }
-        else {
-            throw new Error(`Ошибка: ${data.message}`)
-        }
+        dispatch(loginUserSuccess());
+        setAccessToken(data.accessToken.replace('Bearer ', ''));
+        setRefreshToken(data.refreshToken);
+        navigate(fromPage);
 
     } catch (err) {
         dispatch(loginUserError(err.message));

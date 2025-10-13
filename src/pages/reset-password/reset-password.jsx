@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { passwordReset } from '../../services/actions/reset-password.js';
-import { useLocation, Navigate } from 'react-router-dom';
-import AppHeader from '../../components/app-header/app-header.jsx';
+import { useLocation, Navigate, useNavigate } from 'react-router-dom';
 import AccountInputs from '../../components/account-inputs/account-inputs.jsx';
 import AccountPrompt from '../../components/account-prompt/account-prompt.jsx';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,18 +12,19 @@ const ResetPassword = () => {
     const location = useLocation();
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const onButtonClick = () => {
-        dispatch(passwordReset(newPassword, emailedToken));
+    const onButtonClick = (e) => {
+        e.preventDefault();
+        dispatch(passwordReset(newPassword, emailedToken, navigate));
     }
     if(!location.state || !location.state.fromForgotPassword){
         return <Navigate to="/forgot-password" replace/>;
     }
     return(
         <>
-            <AppHeader/>
             <main>
-                <AccountInputs headlineText={"Восстановление пароля"}>
+                <AccountInputs headlineText={"Восстановление пароля"} onSubmit={onButtonClick}>
                         <PasswordInput
                             placeholder={'Введите новый пароль'}
                             value={newPassword}
@@ -36,7 +36,7 @@ const ResetPassword = () => {
                             value={emailedToken}
                             onChange={e => setEmailedToken(e.target.value)}
                         />
-                        <Button onClick={onButtonClick} htmlType="button">Сохранить</Button>
+                        <Button htmlType="submit">Сохранить</Button>
                     <AccountPrompt 
                         questionText={'Вспомнили пароль?'} 
                         linkText={'Войти'} 

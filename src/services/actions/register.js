@@ -1,4 +1,6 @@
 import { setAccessToken, setRefreshToken } from '../../utils/auth-cookies.js';
+import { BASE_URL } from '../../utils/base-url.js';
+import { checkResponse } from '../../utils/check-response.js';
 
 export const REGISTER_POST_REQUEST = 'REGISTER_POST_REQUEST';
 export const REGISTER_POST_SUCCESS = 'REGISTER_POST_SUCCESS';
@@ -8,41 +10,29 @@ const registerUserRequest = () => ({type: REGISTER_POST_REQUEST});
 const registerUserSuccess = () => ({type: REGISTER_POST_SUCCESS});
 const registerUserError = (error) => ({type: REGISTER_POST_FAIL, payload: error});
 
-export const registerUser = (newUserEmail, newUserPassword, newUserName) => async (dispatch) => {
+export const registerUser = ({email, password, name}, navigate) => async (dispatch) => {
     dispatch(registerUserRequest());
     try {
         const res = await fetch(
-            'https://norma.nomoreparties.space/api/auth/register',
+            `${BASE_URL}/auth/register`,
             {
                 method: "POST",
-                mode: 'cors',
-                cache: 'no-cache',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    email: newUserEmail,
-                    password: newUserPassword,
-                    name: newUserName
-                }),
                 headers: {
-                    "Content-type": "application/json"
+                    "Content-Type": "application/json;charset=utf-8"
                 },
-                referrerPolicy: 'no-referrer'
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    name: name
+                }),
         });
 
-        if (!res.ok) {
-            throw new Error(`Ошибка: ${res.status}`);
-        }
+        const data = await checkResponse(res);
 
-        const data = await res.json();
-
-        if (data.success) {
-            dispatch(registerUserSuccess());
-            setAccessToken(data.accessToken.replace('Bearer ', ''));
-            setRefreshToken(data.refreshToken);
-        }
-        else {
-            throw new Error(`Ошибка: ${data.message}`)
-        }        
+        dispatch(registerUserSuccess());
+        setAccessToken(data.accessToken.replace('Bearer ', ''));
+        setRefreshToken(data.refreshToken);
+        navigate('/', {replace: true});        
 
     } catch (err) {
         dispatch(registerUserError(err.message));

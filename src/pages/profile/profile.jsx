@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser, removeUser } from '../../services/actions/user.js';
-import AppHeader from '../../components/app-header/app-header.jsx';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./profile.module.css";
 
@@ -62,7 +61,6 @@ const Profile = () => {
 
     return(
         <>
-            <AppHeader/>
             <main className={styles.main}>
                 <section className = {styles['nav-links-wrapper']}>
                     <nav className = {styles['nav-links']}>
@@ -84,6 +82,7 @@ const Profile = () => {
                             value={name}
                             icon={'EditIcon'}
                             onChange={handleNameChange}
+                            extraClass={styles.input}
                         />
                         <Input
                             type={'email'}
@@ -91,12 +90,14 @@ const Profile = () => {
                             value={email}
                             icon={'EditIcon'}
                             onChange={handleEmailChange}
+                            extraClass={styles.input}
                         />
                         <PasswordInput
                             placeholder={'Пароль'}
                             icon={'EditIcon'}
                             value={password}
                             onChange={handlePasswordChange}
+                            extraClass={styles.input}
                         />
                     </div>
                 </section>

@@ -7,10 +7,12 @@
     gap: 60px;
 }
 
-.nav-links-wrapper{}
-
 .nav-links{
     display: flex;
     flex-direction: column;
+}
+
+.input:not(:last-child){
+    margin-bottom: 10px;
 }
 

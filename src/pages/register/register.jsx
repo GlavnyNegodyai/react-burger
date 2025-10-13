@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import AppHeader from '../../components/app-header/app-header.jsx';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/actions/register.js';
 import AccountInputs from '../../components/account-inputs/account-inputs.jsx';
 import AccountPrompt from '../../components/account-prompt/account-prompt.jsx';
@@ -8,20 +8,21 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 
 const Register = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
-    const clickHandler = () => {
-        dispatch(registerUser(name, password, email));
+    const clickHandler = (e) => {
+        e.preventDefault();
+        dispatch(registerUser({email, password, name}, navigate));
     }
 
     return(
         <>
-            <AppHeader/>
             <main>
-                <AccountInputs headlineText={"Регистрация"}>
+                <AccountInputs headlineText={"Регистрация"} onSubmit={clickHandler}>
                         <Input
                             type={'text'}
                             placeholder={'Имя'}
@@ -40,7 +41,7 @@ const Register = () => {
                             onChange={e => setPassword(e.target.value)}
                             value={password}
                         />
-                        <Button onClick={clickHandler} htmlType='button'>Зарегистрироваться</Button>
+                        <Button htmlType='submit'>Зарегистрироваться</Button>
                     <AccountPrompt 
                         questionText={'Уже зарегистрированы?'} 
                         linkText={'Войти'} 
