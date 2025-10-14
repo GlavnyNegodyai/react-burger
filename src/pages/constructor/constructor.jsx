@@ -9,14 +9,12 @@ import styles from './constructor.module.css';
 function Constructor({handleModal}) {
 
   return (
-    <>
     <DndProvider backend={HTML5Backend}>
         <main className={styles.main}>
           <BurgerIngredients/>
           <BurgerConstructor handleModal={handleModal}/>
         </main>
     </DndProvider>
-    </>
   );
 }
 

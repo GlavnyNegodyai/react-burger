@@ -22,29 +22,27 @@ const ResetPassword = () => {
         return <Navigate to="/forgot-password" replace/>;
     }
     return(
-        <>
-            <main>
-                <AccountInputs headlineText={"Восстановление пароля"} onSubmit={onButtonClick}>
-                        <PasswordInput
-                            placeholder={'Введите новый пароль'}
-                            value={newPassword}
-                            onChange={e => setNewPassword(e.target.value)}
-                        />
-                        <Input
-                            type={'text'}
-                            placeholder={'Введите код из письма'}
-                            value={emailedToken}
-                            onChange={e => setEmailedToken(e.target.value)}
-                        />
-                        <Button htmlType="submit">Сохранить</Button>
-                    <AccountPrompt 
-                        questionText={'Вспомнили пароль?'} 
-                        linkText={'Войти'} 
-                        toLink={'/login'}
+        <main>
+            <AccountInputs headlineText={"Восстановление пароля"} onSubmit={onButtonClick}>
+                    <PasswordInput
+                        placeholder={'Введите новый пароль'}
+                        value={newPassword}
+                        onChange={e => setNewPassword(e.target.value)}
                     />
-                </AccountInputs>
-            </main>
-        </>
+                    <Input
+                        type={'text'}
+                        placeholder={'Введите код из письма'}
+                        value={emailedToken}
+                        onChange={e => setEmailedToken(e.target.value)}
+                    />
+                    <Button htmlType="submit">Сохранить</Button>
+                <AccountPrompt 
+                    questionText={'Вспомнили пароль?'} 
+                    linkText={'Войти'} 
+                    toLink={'/login'}
+                />
+            </AccountInputs>
+        </main>
     );
 }
 

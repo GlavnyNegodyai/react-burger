@@ -20,7 +20,6 @@ const Login = () => {
     }
 
     return(
-        <>
             <main>
                 <AccountInputs headlineText={"Вход"} onSubmit={handleClick}>
                         <Input
@@ -48,7 +47,6 @@ const Login = () => {
                     />
                 </AccountInputs>
             </main>
-        </>
     );
 }
 

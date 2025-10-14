@@ -1,6 +1,6 @@
 .burger-constructor{
     padding: 100px 0 0 16px;
-    max-width: 600px;
+    max-width: 608px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -17,6 +17,12 @@
     max-height: 50vh;
 }
 
+.burger-constructor__draggable-element{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .burger-constructor__draggable-element:not(:last-child){
     margin-bottom: 16px;
 }
@@ -27,4 +33,3 @@
     justify-content: center;
     gap: 40px;
 }
-

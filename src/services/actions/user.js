@@ -1,5 +1,6 @@
 import {getAccessToken, updateTokens, removeAccessToken, removeRefreshToken } from '../../utils/auth-cookies.js';
 import { BASE_URL } from '../../utils/base-url.js';
+import { checkResponse } from '../../utils/check-response.js';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';
@@ -24,11 +25,7 @@ export const getUser = () => async (dispatch) => {
             }
         );
 
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
+        const data = await checkResponse(response);
 
         if (data.message === 'jwt expired' || data.message === 'jwt malformed'){
             const newToken = await updateTokens();
@@ -43,23 +40,10 @@ export const getUser = () => async (dispatch) => {
                 }
             );
 
-            if (!retryResponse.ok) {
-                throw new Error(`Ошибка сервера: ${retryResponse.status} ${retryResponse.statusText}`);
-            }
+            const retryData = await checkResponse(retryResponse);
 
-            const retryData = await retryResponse.json();
-
-            if (retryData.success) {
-                dispatch(userSuccess(retryData.user));
-                return;
-            }
-            else{
-                throw new Error(retryData.message);
-            }
-        }
-
-        if (!data.success){
-            throw new Error(data.message);
+            dispatch(userSuccess(retryData.user));
+            return;
         }
 
         dispatch(userSuccess(data.user));
@@ -88,11 +72,7 @@ export const updateUser = (email, name) => async (dispatch) => {
             }
         );
 
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
+        const data = await checkResponse(response);
 
         if (data.message === 'jwt expired' || data.message === 'jwt malformed'){
             const newToken = await updateTokens();
@@ -107,23 +87,11 @@ export const updateUser = (email, name) => async (dispatch) => {
                 }
             );
 
-            if (!retryResponse.ok) {
-                throw new Error(`Ошибка сервера: ${retryResponse.status} ${retryResponse.statusText}`);
-            }
+            const retryData = await checkResponse(retryResponse);
 
-            const retryData = await retryResponse.json();
+            dispatch(userSuccess(retryData.user));
+            return;
 
-            if (retryData.success) {
-                dispatch(userSuccess(retryData.user));
-                return;
-            }
-            else{
-                throw new Error(retryData.message);
-            }
-        }
-
-        if (!data.success){
-            throw new Error(data.message);
         }
 
         dispatch(userSuccess(data.user));

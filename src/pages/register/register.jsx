@@ -20,36 +20,34 @@ const Register = () => {
     }
 
     return(
-        <>
-            <main>
-                <AccountInputs headlineText={"Регистрация"} onSubmit={clickHandler}>
-                        <Input
-                            type={'text'}
-                            placeholder={'Имя'}
-                            onChange={e => setName(e.target.value)}
-                            value={name}
-                        />
-                        <Input
-                            type={'email'}
-                            placeholder={'E-mail'}
-                            onChange={e => setEmail(e.target.value)}
-                            value={email}
-                        />
-                        <PasswordInput
-                            placeholder={'Пароль'}
-                            icon={'ShowIcon'}
-                            onChange={e => setPassword(e.target.value)}
-                            value={password}
-                        />
-                        <Button htmlType='submit'>Зарегистрироваться</Button>
-                    <AccountPrompt 
-                        questionText={'Уже зарегистрированы?'} 
-                        linkText={'Войти'} 
-                        toLink={'/login'}
+        <main>
+            <AccountInputs headlineText={"Регистрация"} onSubmit={clickHandler}>
+                    <Input
+                        type={'text'}
+                        placeholder={'Имя'}
+                        onChange={e => setName(e.target.value)}
+                        value={name}
                     />
-                </AccountInputs>
-            </main>
-        </>
+                    <Input
+                        type={'email'}
+                        placeholder={'E-mail'}
+                        onChange={e => setEmail(e.target.value)}
+                        value={email}
+                    />
+                    <PasswordInput
+                        placeholder={'Пароль'}
+                        icon={'ShowIcon'}
+                        onChange={e => setPassword(e.target.value)}
+                        value={password}
+                    />
+                    <Button htmlType='submit'>Зарегистрироваться</Button>
+                <AccountPrompt 
+                    questionText={'Уже зарегистрированы?'} 
+                    linkText={'Войти'} 
+                    toLink={'/login'}
+                />
+            </AccountInputs>
+        </main>
     );
 }
 

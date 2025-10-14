@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
     return(
-    <>
         <main className="main--error">
             <section className='mt-25 error-section'>
                 <h1 className='error-message text text_type_main-large'>
@@ -16,7 +15,6 @@ const PageNotFound = () => {
                 <Link to='/' className='text_type_main-default mt-20'>Вернуться на главную страницу</Link>
             </section>
         </main>
-    </>
     )
 }
 

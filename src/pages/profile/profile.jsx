@@ -60,49 +60,47 @@ const Profile = () => {
 
 
     return(
-        <>
-            <main className={styles.main}>
-                <section className = {styles['nav-links-wrapper']}>
-                    <nav className = {styles['nav-links']}>
-                        <NavLink to="/profile" className={({ isActive }) =>
-                        `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}
-                        >Профиль</NavLink>
-                        <NavLink to="/profile/orders" className={({ isActive }) =>
-                        `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}>История заказов</NavLink>
-                        <NavLink to="/" onClick={handleLogoutClick} className={
-                        'text text_type_main-default text_color_inactive'}>Выход</NavLink>
-                    </nav>
+        <main className={styles.main}>
+            <section className = {styles['nav-links-wrapper']}>
+                <nav className = {styles['nav-links']}>
+                    <NavLink to="/profile" className={({ isActive }) =>
+                    `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}
+                    >Профиль</NavLink>
+                    <NavLink to="/profile/orders" className={({ isActive }) =>
+                    `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}>История заказов</NavLink>
+                    <NavLink to="/" onClick={handleLogoutClick} className={
+                    'text text_type_main-default text_color_inactive'}>Выход</NavLink>
+                </nav>
 
-                </section>
-                <section className='profile-inputs-wrapper'>
-                    <div className="profile-inputs">
-                        <Input
-                            type={'text'}
-                            placeholder={'text'}
-                            value={name}
-                            icon={'EditIcon'}
-                            onChange={handleNameChange}
-                            extraClass={styles.input}
-                        />
-                        <Input
-                            type={'email'}
-                            placeholder={'E-mail'}
-                            value={email}
-                            icon={'EditIcon'}
-                            onChange={handleEmailChange}
-                            extraClass={styles.input}
-                        />
-                        <PasswordInput
-                            placeholder={'Пароль'}
-                            icon={'EditIcon'}
-                            value={password}
-                            onChange={handlePasswordChange}
-                            extraClass={styles.input}
-                        />
-                    </div>
-                </section>
-            </main>
-        </>
+            </section>
+            <section className='profile-inputs-wrapper'>
+                <div className="profile-inputs">
+                    <Input
+                        type={'text'}
+                        placeholder={'text'}
+                        value={name}
+                        icon={'EditIcon'}
+                        onChange={handleNameChange}
+                        extraClass={styles.input}
+                    />
+                    <Input
+                        type={'email'}
+                        placeholder={'E-mail'}
+                        value={email}
+                        icon={'EditIcon'}
+                        onChange={handleEmailChange}
+                        extraClass={styles.input}
+                    />
+                    <PasswordInput
+                        placeholder={'Пароль'}
+                        icon={'EditIcon'}
+                        value={password}
+                        onChange={handlePasswordChange}
+                        extraClass={styles.input}
+                    />
+                </div>
+            </section>
+        </main>
     );
 }
 

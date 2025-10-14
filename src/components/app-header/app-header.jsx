@@ -21,7 +21,7 @@ const AppHeader = () => {
                     >Лента заказов</NavLink>
                 </div>
             </nav>
-            <Logo />
+            <NavLink to='/'><Logo /></NavLink>
             <div className='header-element'>
                 <ProfileIcon type='secondary' />
                 <NavLink to="/profile" end className={({ isActive }) =>

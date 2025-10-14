@@ -12,7 +12,7 @@ import {
   Orders
 } from '../../pages';
 import AppHeader from '../app-header/app-header.jsx';
-import { ModalWindow } from '../modal-window/modal-window.jsx';
+import { IngredientModal } from '../ingredient-modal/ingredient-modal.jsx';
 import { ProtectedRouteElement } from '../protected-route/protected-route.jsx';
 
 function App() {
@@ -78,7 +78,7 @@ function App() {
       
       {background && (
         <Routes>
-          <Route path='/ingredients/:id' element={<ModalWindow/>}/>
+          <Route path='/ingredients/:id' element={<IngredientModal/>}/>
         </Routes>
       )}
     </>

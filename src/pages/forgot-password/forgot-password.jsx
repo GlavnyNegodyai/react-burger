@@ -18,7 +18,6 @@ const ForgotPassword = () => {
 
 
     return(
-        <>
             <main>
                 <AccountInputs headlineText={"Восстановление пароля"} onSubmit={handleEmailSubmit}>
                     <Input
@@ -35,7 +34,6 @@ const ForgotPassword = () => {
                     />
                 </AccountInputs>
             </main>
-        </>
     );
 }
 

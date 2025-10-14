@@ -39,7 +39,6 @@ const BurgerIngredientCard = ({ingredient}) => {
      });
 
     return(
-        <>
         <div className='ingredient-card' onClick={onCardClick} ref={dragRef}>
             {handleIngredientCount() !== 0 && <Counter count={handleIngredientCount()} size="default" extraClass="m-1" />}
             <img src={image} alt={name} className='ingredient-picture'/>
@@ -50,7 +49,6 @@ const BurgerIngredientCard = ({ingredient}) => {
             <h3 className='ingredient-name text text_type_main-default'>{name}</h3>
 
         </div>
-        </>
     );
 }
 

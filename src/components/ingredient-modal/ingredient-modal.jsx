@@ -1,10 +1,10 @@
 import React from 'react';
-import './modal-window.css';
+import './ingredient-modal.css';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import Modal from '../modal/modal.jsx';
 import { useNavigate } from 'react-router-dom';
 
-export const ModalWindow = () => {
+export const IngredientModal = () => {
     const navigate = useNavigate();
     const onModalClose = () => {
             navigate(-1);

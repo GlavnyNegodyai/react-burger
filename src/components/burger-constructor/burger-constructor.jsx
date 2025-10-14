@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useMemo, useRef} from 'react';
-import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details.jsx';
 import Modal from '../modal/modal.jsx';
 import './burger-constructor.css';
@@ -43,11 +43,13 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
 
     return(
     <li ref={constructorElementRef}  className='burger-constructor__draggable-element'>
+        <DragIcon type="primary" />
         <ConstructorElement
             text={ingredient.name}
             price={ingredient.price}
             thumbnail={ingredient.image}
             handleClose={() => dispatch(handleRemoveIngredient(draggableIndex))}
+            extraClass='ml-2 mr-2'
         />
     </li>
     )
@@ -58,7 +60,7 @@ const BurgerConstructor = ({ handleModal }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = getRefreshToken();
-    
+
     const onModalClose = () => {
         setButtonClicked(false);
         handleModal();
@@ -106,9 +108,10 @@ const BurgerConstructor = ({ handleModal }) => {
                 {selectedBun && <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={selectedBun.name}
+                    text={`${selectedBun.name} (низ)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image}
+                    extraClass='ml-8 mr-4'
                 />}
             </div>
             <ul className='burger-constructor__draggables-list'>
@@ -120,10 +123,11 @@ const BurgerConstructor = ({ handleModal }) => {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={selectedBun.name}
+                    text={`${selectedBun.name} (верх)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image}
-                /> 
+                    extraClass='ml-8'
+                />
             </div>}
             <div className='burger-constructor__bottom'>
                 <p className='text text_type_digits-medium p-1'>
