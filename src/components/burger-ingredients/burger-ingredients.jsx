@@ -1,19 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
+import { useNavigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
-import Modal from '../modal/modal.jsx';
 import { fetchIngredients } from '../../services/actions/burger-ingredients.js';
-import { REMOVE_INGREDIENT_DETAILS, ADD_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details.js';
 import './burger-ingredients.css';
 
 
-const BurgerIngredientCard = ({ingredient, handleModal}) => {
+const BurgerIngredientCard = ({ingredient}) => {
+    const location = useLocation();
     const {name, image, price, type, _id} = ingredient;
-    const [isCardClicked, setCardClicked] = useState(false);
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const constructorItems = useSelector(
         store => store.constructorReducer.constructorItems
@@ -28,17 +26,10 @@ const BurgerIngredientCard = ({ingredient, handleModal}) => {
         return arrayToCount.filter(item => item._id === _id).length;
     }
 
-    const onModalClose = () => {
-            setCardClicked(false);
-            dispatch({type: REMOVE_INGREDIENT_DETAILS});
-            handleModal();
-    }
-
     const onCardClick = () => {
-
-            setCardClicked(true);
-            dispatch({type:ADD_INGREDIENT_DETAILS, payload: ingredient});
-            handleModal();
+            navigate(`/ingredients/${_id}`, {
+                state: {background: location}
+            });
     }
 
 
@@ -48,7 +39,6 @@ const BurgerIngredientCard = ({ingredient, handleModal}) => {
      });
 
     return(
-        <>
         <div className='ingredient-card' onClick={onCardClick} ref={dragRef}>
             {handleIngredientCount() !== 0 && <Counter count={handleIngredientCount()} size="default" extraClass="m-1" />}
             <img src={image} alt={name} className='ingredient-picture'/>
@@ -59,21 +49,17 @@ const BurgerIngredientCard = ({ingredient, handleModal}) => {
             <h3 className='ingredient-name text text_type_main-default'>{name}</h3>
 
         </div>
-            <Modal onClose={onModalClose} headerText='Детали ингредиента' isModalOpened={isCardClicked}>
-                <IngredientDetails/>
-            </Modal>
-        </>
     );
 }
 
-const BurgerIngredientRow = ({ingredients, title, handleModal, rowRef}) => {
+const BurgerIngredientRow = ({ingredients, title, rowRef}) => {
     return(
     <div className='ingredients-row' ref={rowRef}>
         <h2 className='ingredients-row__headline text text_type_main-medium'>{title}</h2>
         <ul className='ingredients-row__list'>
             {ingredients.map(ingredient => (
                 <li key={String(ingredient._id)}>
-                    <BurgerIngredientCard ingredient={ingredient} handleModal={handleModal}/>
+                    <BurgerIngredientCard ingredient={ingredient}/>
                 </li>
             ))}
         </ul>
@@ -104,7 +90,7 @@ function ingredientsByType(allIngredients, ingredientsType){
     return allIngredients.filter(singleIngredient => singleIngredient.type === ingredientsType);
 }
 
-const BurgerIngredients = ({handleModal}) => {
+const BurgerIngredients = () => {
     const {ingredients, loading, error} = useSelector(store => ({
         ingredients: store.ingredientsReducer.ingredients,
         loading: store.ingredientsReducer.fetchLoading,
@@ -160,9 +146,9 @@ const BurgerIngredients = ({handleModal}) => {
                     </Tab>               
                 </nav>
                 <div className='burger-ingredients__wrapper' onScroll={handleScroll}  ref={ingredientsRef}>
-                    <BurgerIngredientRow ingredients={bunIngredients} title='Булки' rowRef={bunRef} handleModal={handleModal}></BurgerIngredientRow>
-                    <BurgerIngredientRow ingredients={sauceIngredients} title='Соусы' rowRef={SauceRef} handleModal={handleModal}></BurgerIngredientRow>
-                    <BurgerIngredientRow ingredients={mainIngredients} title='Начинки' rowRef={mainRef} handleModal={handleModal}></BurgerIngredientRow>
+                    <BurgerIngredientRow ingredients={bunIngredients} title='Булки' rowRef={bunRef}></BurgerIngredientRow>
+                    <BurgerIngredientRow ingredients={sauceIngredients} title='Соусы' rowRef={SauceRef}></BurgerIngredientRow>
+                    <BurgerIngredientRow ingredients={mainIngredients} title='Начинки' rowRef={mainRef}></BurgerIngredientRow>
                 </div>
             </section>
         </>

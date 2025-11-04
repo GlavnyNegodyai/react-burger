@@ -1,3 +1,7 @@
+import { BASE_URL } from '../../utils/base-url.js';
+import { checkResponse } from '../../utils/check-response.js';
+
+
 export const CONSTRUCTOR_SEND_ORDER_REQUEST = 'CONSTRUCTOR_SEND_ORDER_REQUEST';
 export const CONSTRUCTOR_SEND_ORDER_FAIL = 'CONSTRUCTOR_SEND_ORDER_FAIL';
 export const CONSTRUCTOR_SEND_ORDER_SUCCESS = 'CONSTRUCTOR_SEND_ORDER_SUCCESS';
@@ -6,27 +10,30 @@ export const CONSTRUCTOR_SEND_ORDER_SUCCESS = 'CONSTRUCTOR_SEND_ORDER_SUCCESS';
 export const sendOrder = () => async (dispatch, getState) => {
     const { constructorItems, constructorBun } = getState().constructorReducer;
     const ingredientIds = [(constructorBun && constructorBun._id), ...constructorItems.map(item => item._id)];
+    if(ingredientIds.some(id => id)){
+        try{
+            dispatch({type: CONSTRUCTOR_SEND_ORDER_REQUEST});
+            console.log(ingredientIds);
+            const res = await fetch(`${BASE_URL}/orders`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ingredients: ingredientIds })
+            });
 
-    try{
-        dispatch({type: CONSTRUCTOR_SEND_ORDER_REQUEST});
-        const sendingOrder = await fetch('https://norma.nomoreparties.space/api/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ ingredients: ingredientIds })
-        });
+            const data = await checkResponse(res);
 
-        if(!sendingOrder.ok){
-            throw new Error(`Ошибка: ${sendingOrder.status}`);
+            const orderSendResult = data;
+            dispatch({type: CONSTRUCTOR_SEND_ORDER_SUCCESS, payload: orderSendResult});
         }
-
-        const orderSendResult = await sendingOrder.json();
-        return dispatch({type: CONSTRUCTOR_SEND_ORDER_SUCCESS, payload: orderSendResult});
+        catch (error) {
+            dispatch({type: CONSTRUCTOR_SEND_ORDER_FAIL});
+            console.error('Ошибка при отправке:', error);
+            throw error;
+        }
     }
-    catch (error) {
+    else{
         dispatch({type: CONSTRUCTOR_SEND_ORDER_FAIL});
-        console.error('Ошибка при отправке:', error);
-        throw error;
     }
 }

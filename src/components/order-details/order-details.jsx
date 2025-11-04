@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
     const orderDetails = useSelector(store => (
-        store.orderReducer.orderDetails.order.number
+        store.orderReducer.orderDetails?.order?.number
     ));
     return(
         <div className='modal-order__bottom'>

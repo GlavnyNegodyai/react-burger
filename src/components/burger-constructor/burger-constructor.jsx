@@ -1,17 +1,19 @@
 import React from 'react';
 import {useState, useMemo, useRef} from 'react';
-import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderDetails from '../order-details/order-details.jsx';
 import Modal from '../modal/modal.jsx';
 import './burger-constructor.css';
 import { useDrop, useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     handleCardDrop,
     handleRemoveIngredient,
     handleMoveConstructorElement
 } from '../../services/actions/burger-constructor.js';
 import { sendOrder } from '../../services/actions/order-details.js';
+import { getRefreshToken } from '../../utils/auth-cookies.js';
 
 
 const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
@@ -41,11 +43,13 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
 
     return(
     <li ref={constructorElementRef}  className='burger-constructor__draggable-element'>
+        <DragIcon type="primary" />
         <ConstructorElement
             text={ingredient.name}
             price={ingredient.price}
             thumbnail={ingredient.image}
             handleClose={() => dispatch(handleRemoveIngredient(draggableIndex))}
+            extraClass='ml-2 mr-2'
         />
     </li>
     )
@@ -54,14 +58,9 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
 const BurgerConstructor = ({ handleModal }) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const token = getRefreshToken();
 
-
-    const onButtonClick = async () => {
-        await dispatch(sendOrder());
-        setButtonClicked(true);
-        handleModal();
-    }
-    
     const onModalClose = () => {
         setButtonClicked(false);
         handleModal();
@@ -80,7 +79,20 @@ const BurgerConstructor = ({ handleModal }) => {
     const {selectedIngredients, selectedBun} = useSelector(store => ({
         selectedIngredients: store.constructorReducer.constructorItems,
         selectedBun: store.constructorReducer.constructorBun
-    }) )
+    }) );
+
+    const onButtonClick = async () => {
+        if(!token || token === ''){
+            navigate('/login');
+        }
+        else{
+            if(selectedIngredients.some(ing => ing) || selectedBun){
+                await dispatch(sendOrder());
+                setButtonClicked(true);
+                handleModal();
+            }
+        }
+    }
 
     const countPrice = useMemo(() => {
     const ingredientsPrice = selectedIngredients.reduce(
@@ -90,16 +102,16 @@ const BurgerConstructor = ({ handleModal }) => {
     return ingredientsPrice + (selectedBun ? selectedBun.price * 2 : 0);
     }, [selectedIngredients, selectedBun]);
 
-
     return(
         <section className='burger-constructor' ref={dropRef}>
             <div className='burger-constructor__undraggable-element'>
                 {selectedBun && <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={selectedBun.name}
+                    text={`${selectedBun.name} (низ)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image}
+                    extraClass='ml-8 mr-4'
                 />}
             </div>
             <ul className='burger-constructor__draggables-list'>
@@ -111,10 +123,11 @@ const BurgerConstructor = ({ handleModal }) => {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={selectedBun.name}
+                    text={`${selectedBun.name} (верх)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image}
-                /> 
+                    extraClass='ml-8'
+                />
             </div>}
             <div className='burger-constructor__bottom'>
                 <p className='text text_type_digits-medium p-1'>

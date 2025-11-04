@@ -2,10 +2,11 @@ import React from 'react';
 import {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './modal.css';
-import {CloseIcon} from  '@ya.praktikum/react-developer-burger-ui-components';
+import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Modal = ({onClose, headerText, children, isModalOpened}) => {
   const handleCloseClick = (event) => {
+    event.stopPropagation();
     if (event.target === event.currentTarget || event.target.closest('.modal-close')) {
       onClose();
     }

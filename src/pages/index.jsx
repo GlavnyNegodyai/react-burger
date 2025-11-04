@@ -1,0 +1,9 @@
+export { default as Constructor } from './constructor/constructor.jsx';
+export { default as IngredientPage } from './ingredient-page/ingredient-page.jsx';
+export { default as Login } from './login/login.jsx';
+export { default as PageNotFound } from './page-not-found/page-not-found.jsx';
+export { default as Profile } from './profile/profile.jsx';
+export { default as Register } from './register/register.jsx';
+export { default as ResetPassword } from './reset-password/reset-password.jsx';
+export { default as ForgotPassword } from './forgot-password/forgot-password.jsx';
+export { default as Orders } from './orders/orders.jsx';
