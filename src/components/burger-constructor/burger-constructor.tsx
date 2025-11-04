@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {useState, useMemo, useRef} from 'react';
 import {ConstructorElement, Button, CurrencyIcon, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import OrderDetails from '../order-details/order-details.jsx';
-import Modal from '../modal/modal.jsx';
+import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal';
 import './burger-constructor.css';
 import { useDrop, useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,21 +11,50 @@ import {
     handleCardDrop,
     handleRemoveIngredient,
     handleMoveConstructorElement
-} from '../../services/actions/burger-constructor.js';
-import { sendOrder } from '../../services/actions/order-details.js';
-import { getRefreshToken } from '../../utils/auth-cookies.js';
+} from '../../services/actions/burger-constructor';
+import { sendOrder } from '../../services/actions/order-details';
+import { getRefreshToken } from '../../utils/auth-cookies';
 
+type IngredientBase = {
+    name: string;
+    price: number;
+    image: string;
+};
 
-const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
+type Ingredient = IngredientBase & {
+    uid: string;
+};
+
+type DraggableConstructorElementProps = {
+    draggableIndex: number;
+    ingredient: IngredientBase;
+};
+
+type DragItem = {
+    draggableIndex: number;
+};
+
+type BurgerConstructorProps = {
+    handleModal: () => void;
+};
+
+type RootState = {
+    constructorReducer: {
+        constructorItems: Ingredient[];
+        constructorBun: Ingredient | null;
+    };    
+};
+
+const DraggableConstructorElement: FC<DraggableConstructorElementProps> = ({draggableIndex, ingredient}) => {
     const dispatch = useDispatch();
-    const constructorElementRef = useRef(null);
+    const constructorElementRef = useRef<HTMLLIElement>(null);
 
-        const [, constructorDragRef] = useDrag({
+        const [, constructorDragRef] = useDrag<DragItem>({
         type: 'constructorElement',
         item: { draggableIndex },
     });
 
-        const [, constructorDropRef] = useDrop({
+        const [, constructorDropRef] = useDrop<DragItem>({
         accept: 'constructorElement',
         drop: (dragItem) => {
             if (!constructorElementRef.current) return;
@@ -33,7 +62,7 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
             const dragIndex = dragItem.draggableIndex;
             const dropIndex = draggableIndex;
             if (dragIndex === dropIndex) return;
-
+            // @ts-ignore
             dispatch(handleMoveConstructorElement(dragIndex, dropIndex));
         }
     });
@@ -48,6 +77,7 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
             text={ingredient.name}
             price={ingredient.price}
             thumbnail={ingredient.image}
+            // @ts-ignore
             handleClose={() => dispatch(handleRemoveIngredient(draggableIndex))}
             extraClass='ml-2 mr-2'
         />
@@ -55,7 +85,7 @@ const DraggableConstructorElement = ({draggableIndex, ingredient}) => {
     )
 }
 
-const BurgerConstructor = ({ handleModal }) => {
+const BurgerConstructor: FC<BurgerConstructorProps> = ({ handleModal }) => {
     const [isButtonClicked, setButtonClicked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -67,16 +97,17 @@ const BurgerConstructor = ({ handleModal }) => {
     }
 
     
-
-    const [, dropRef] = useDrop({
+    const dropTargetRef = useRef<HTMLElement>(null);
+    const [, dropRef] = useDrop<Ingredient>({
         accept: 'ingredient',
-        drop(item) {
+        drop(item: Ingredient) {
+            // @ts-ignore
             dispatch(handleCardDrop(item));
         },
-    }); 
+    });
+    dropRef(dropTargetRef);
     
-
-    const {selectedIngredients, selectedBun} = useSelector(store => ({
+    const {selectedIngredients, selectedBun} = useSelector((store:  RootState) => ({
         selectedIngredients: store.constructorReducer.constructorItems,
         selectedBun: store.constructorReducer.constructorBun
     }) );
@@ -86,7 +117,8 @@ const BurgerConstructor = ({ handleModal }) => {
             navigate('/login');
         }
         else{
-            if(selectedIngredients.some(ing => ing) || selectedBun){
+            if(selectedIngredients.some((ing: Ingredient) => ing) || selectedBun){
+                // @ts-ignore
                 await dispatch(sendOrder());
                 setButtonClicked(true);
                 handleModal();
@@ -96,14 +128,14 @@ const BurgerConstructor = ({ handleModal }) => {
 
     const countPrice = useMemo(() => {
     const ingredientsPrice = selectedIngredients.reduce(
-        (sum, ingredient) => sum + ingredient.price,
+        (sum: number, ingredient: Ingredient) => sum + ingredient.price,
         0
     );
     return ingredientsPrice + (selectedBun ? selectedBun.price * 2 : 0);
     }, [selectedIngredients, selectedBun]);
 
     return(
-        <section className='burger-constructor' ref={dropRef}>
+        <section className='burger-constructor' ref={dropTargetRef}>
             <div className='burger-constructor__undraggable-element'>
                 {selectedBun && <ConstructorElement
                     type="top"
@@ -115,7 +147,7 @@ const BurgerConstructor = ({ handleModal }) => {
                 />}
             </div>
             <ul className='burger-constructor__draggables-list'>
-                {(selectedIngredients || []).map((ingredient, index) => (
+                {(selectedIngredients || []).map((ingredient: Ingredient, index: number) => (
                     <DraggableConstructorElement key={ingredient.uid} ingredient={ingredient} draggableIndex={index}/>
                 ))}
             </ul>

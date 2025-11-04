@@ -1,20 +1,27 @@
-import React from 'react';
+import React, {FunctionComponent, ReactNode} from 'react';
 import {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './modal.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Modal = ({onClose, headerText, children, isModalOpened}) => {
-  const handleCloseClick = (event) => {
+interface ModalProps {
+  onClose: () => void;
+  headerText: string;
+  children: ReactNode;
+  isModalOpened: boolean;
+};
+
+const Modal: FunctionComponent<ModalProps> = ({onClose, headerText, children, isModalOpened}) => {
+  const handleCloseClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
-    if (event.target === event.currentTarget || event.target.closest('.modal-close')) {
+    if (event.target === event.currentTarget || (event.target as Element).closest('.modal-close')) {
       onClose();
     }
     
   };
 
   useEffect (() => {
-    const closeOnEsc = (event) => {
+    const closeOnEsc = (event: KeyboardEvent) => {
         if (event.key === 'Escape'){
             onClose();
         }
@@ -28,6 +35,9 @@ const Modal = ({onClose, headerText, children, isModalOpened}) => {
   }, [isModalOpened, onClose]);
 
   if (!isModalOpened) return null;
+
+  const modalRoot = document.getElementById('modal-overlay');
+  if (!modalRoot) return null;
 
   return ReactDOM.createPortal(
     <div className='modal-wrapper' onClick={handleCloseClick}>
@@ -44,7 +54,7 @@ const Modal = ({onClose, headerText, children, isModalOpened}) => {
       </div>
     </div>
 ,
-    document.getElementById('modal-overlay')
+    modalRoot
   );
 };
 

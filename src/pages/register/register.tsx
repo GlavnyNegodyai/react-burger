@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../../services/actions/register.js';
-import AccountInputs from '../../components/account-inputs/account-inputs.jsx';
-import AccountPrompt from '../../components/account-prompt/account-prompt.jsx';
+import { registerUser } from '../../services/actions/register';
+import AccountInputs from '../../components/account-inputs/account-inputs';
+import AccountPrompt from '../../components/account-prompt/account-prompt';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Register = () => {
@@ -14,8 +14,9 @@ const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
-    const clickHandler = (e) => {
+    const clickHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(registerUser({email, password, name}, navigate));
     }
 
@@ -27,12 +28,16 @@ const Register = () => {
                         placeholder={'Имя'}
                         onChange={e => setName(e.target.value)}
                         value={name}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <Input
                         type={'email'}
                         placeholder={'E-mail'}
                         onChange={e => setEmail(e.target.value)}
                         value={email}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <PasswordInput
                         placeholder={'Пароль'}

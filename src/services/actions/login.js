@@ -1,6 +1,6 @@
-import { setAccessToken, setRefreshToken } from '../../utils/auth-cookies.js';
-import { BASE_URL } from '../../utils/base-url.js';
-import { checkResponse } from '../../utils/check-response.js';
+import { setAccessToken, setRefreshToken } from '../../utils/auth-cookies';
+import { BASE_URL } from '../../utils/base-url';
+import { checkResponse } from '../../utils/check-response';
 
 export const LOGIN_POST_REQUEST = 'LOGIN_POST_REQUEST';
 export const LOGIN_POST_SUCCESS = 'LOGIN_POST_SUCCESS';

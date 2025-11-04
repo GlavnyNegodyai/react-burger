@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
     const orderDetails = useSelector(store => (
+        // @ts-ignore
         store.orderReducer.orderDetails?.order?.number
     ));
     return(

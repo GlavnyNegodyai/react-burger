@@ -11,9 +11,9 @@ import {
   ForgotPassword,
   Orders
 } from '../../pages';
-import AppHeader from '../app-header/app-header.jsx';
-import { IngredientModal } from '../ingredient-modal/ingredient-modal.jsx';
-import { ProtectedRouteElement } from '../protected-route/protected-route.jsx';
+import AppHeader from '../app-header/app-header';
+import { IngredientModal } from '../ingredient-modal/ingredient-modal';
+import { ProtectedRouteElement } from '../protected-route/protected-route';
 
 function App() {
   const location = useLocation();

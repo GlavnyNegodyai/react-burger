@@ -1,5 +1,5 @@
-import {BASE_URL} from '../../utils/base-url.js';
-import { checkResponse } from '../../utils/check-response.js';
+import {BASE_URL} from '../../utils/base-url';
+import { checkResponse } from '../../utils/check-response';
 
 export const FORGOT_PASSWORD_POST_REQUEST = 'FORGOT_PASSWORD_POST_REQUEST';
 export const FORGOT_PASSWORD_POST_SUCCESS = 'FORGOT_PASSWORD_POST_SUCCESS';

@@ -1,7 +1,7 @@
 import React from 'react';
 import './ingredient-modal.css';
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
-import Modal from '../modal/modal.jsx';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 import { useNavigate } from 'react-router-dom';
 
 export const IngredientModal = () => {

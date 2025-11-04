@@ -1,5 +1,5 @@
 import React from 'react';
-import IngredientDetails from '../../components/ingredient-details/ingredient-details.jsx';
+import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 
 const IngredientPage = () => {
 

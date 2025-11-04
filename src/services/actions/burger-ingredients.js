@@ -1,5 +1,5 @@
-import {BASE_URL} from '../../utils/base-url.js';
-import { checkResponse } from '../../utils/check-response.js';
+import {BASE_URL} from '../../utils/base-url';
+import { checkResponse } from '../../utils/check-response';
 
 export const BURGER_INGREDIENTS_FETCH_REQUEST = 'BURGER_INGREDIENTS_FETCH_REQUEST';
 export const BURGER_INGREDIENTS_FETCH_SUCCESS = 'BURGER_INGREDIENTS_FETCH_SUCCESS';

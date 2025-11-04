@@ -1,11 +1,13 @@
 import Cookies from 'js-cookie';
-import { BASE_URL } from './base-url.js';
-import { checkResponse } from './check-response.js';
+import { BASE_URL } from './base-url';
+import { checkResponse } from './check-response';
 
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
 
-export const setAccessToken = (token, minutes = 20) => {
+type TokenType = string;
+
+export const setAccessToken = (token: TokenType, minutes = 20) => {
     Cookies.set(ACCESS_TOKEN_KEY,
         token, 
         {
@@ -26,7 +28,7 @@ export const removeAccessToken  = () => {
 }
 
 
-export const setRefreshToken = (token) => {
+export const setRefreshToken = (token: TokenType) => {
     Cookies.set(REFRESH_TOKEN_KEY,
         token, 
         {

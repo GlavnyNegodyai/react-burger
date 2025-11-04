@@ -1,6 +1,6 @@
-import {getAccessToken, updateTokens, removeAccessToken, removeRefreshToken } from '../../utils/auth-cookies.js';
-import { BASE_URL } from '../../utils/base-url.js';
-import { checkResponse } from '../../utils/check-response.js';
+import {getAccessToken, updateTokens, removeAccessToken, removeRefreshToken } from '../../utils/auth-cookies';
+import { BASE_URL } from '../../utils/base-url';
+import { checkResponse } from '../../utils/check-response';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';

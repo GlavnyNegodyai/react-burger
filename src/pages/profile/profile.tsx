@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, updateUser, removeUser } from '../../services/actions/user.js';
+import { getUser, updateUser, removeUser } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./profile.module.css";
 
@@ -10,9 +10,11 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const handleLogoutClick = () => {
+        //@ts-ignore
         dispatch(removeUser(navigate));
     }
 
+    //@ts-ignore
     const user = useSelector((store) => store.userReducer.user);
 
     const [name, setName] = useState('');
@@ -20,6 +22,7 @@ const Profile = () => {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(getUser());
     }, [dispatch]);
 
@@ -30,30 +33,33 @@ const Profile = () => {
         }
     }, [user]);
 
-    let timer = useRef(null);
+    let timer = useRef<NodeJS.Timeout | null>(null);
 
     const timeOutUserUpdate = () => {
         if(timer.current){
             clearTimeout(timer.current);
         }
         timer.current = setTimeout(() => {
+            console.log("Данные изменены");
+            console.log(email, name);
+            //@ts-ignore
             dispatch(updateUser(email, name));
         },
         5000 
         );
     }
 
-    const handleNameChange = (e) => {
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
         timeOutUserUpdate();
     };
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
         timeOutUserUpdate();
     };
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
     };
     
@@ -82,6 +88,8 @@ const Profile = () => {
                         icon={'EditIcon'}
                         onChange={handleNameChange}
                         extraClass={styles.input}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <Input
                         type={'email'}
@@ -90,6 +98,8 @@ const Profile = () => {
                         icon={'EditIcon'}
                         onChange={handleEmailChange}
                         extraClass={styles.input}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <PasswordInput
                         placeholder={'Пароль'}
