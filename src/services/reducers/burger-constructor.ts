@@ -1,0 +1,66 @@
+import { TConstructorIngredient } from '../types/data';
+import { TconstructorActions } from '../actions/burger-constructor';
+
+import {
+    CONSTRUCTOR_ADD_BUN,
+    CONSTRUCTOR_REMOVE_BUN,
+    CONSTRUCTOR_ADD_INGREDIENT,
+    CONSTRUCTOR_REMOVE_INGREDIENT,
+    CONSTRUCTOR_MOVE,
+    CONSTRUCTOR_CLEAR
+    } from '../actions/burger-constructor';
+
+type TinitialState = {
+    constructorItems: TConstructorIngredient[];
+    constructorBun: TConstructorIngredient | null;
+};
+
+const initialState: TinitialState = {
+    constructorItems: [],
+    constructorBun: null
+};
+
+export function constructorReducer(state = initialState, action: TconstructorActions){
+    switch(action.type){
+        case CONSTRUCTOR_ADD_BUN: {
+            return{
+                ...state,
+                constructorBun: action.payload
+            }
+        }
+        case CONSTRUCTOR_REMOVE_BUN: {
+            return {
+                ...state,
+                constructorBun: null
+            }
+        }
+        case CONSTRUCTOR_ADD_INGREDIENT: {
+            return{
+                ...state,
+                constructorItems: [...state.constructorItems, action.payload]
+            }
+        }
+        case CONSTRUCTOR_REMOVE_INGREDIENT: {
+            return{
+                ...state,
+                constructorItems: action.payload
+            }
+        }
+        case CONSTRUCTOR_CLEAR: {
+            return{
+                ...state,
+                constructorItems: [],
+                constructorBun: null
+            }
+        }
+        case CONSTRUCTOR_MOVE: {
+            return{
+                ...state, 
+                constructorItems: action.payload
+            }
+        }
+
+        default:
+            return state;
+    }
+}

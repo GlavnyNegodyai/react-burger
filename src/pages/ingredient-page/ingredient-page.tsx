@@ -8,7 +8,6 @@ const IngredientPage = () => {
             <main>
                 <IngredientDetails/>
             </main>
-            
         </>
     );
 }

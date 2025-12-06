@@ -1,0 +1,16 @@
+.ingredient-picture--small{
+    background: #131316; 
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.ingredient-gradient{
+    background-image: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    padding: 3px;
+    max-height:max-content;
+    max-width: max-content;
+    border-radius: 100%;
+}

@@ -1,12 +1,12 @@
 import React from 'react';
 import './order-details.css';
 import doneImage from '../../images/done.png';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 const OrderDetails = () => {
     const orderDetails = useSelector(store => (
-        // @ts-ignore
-        store.orderReducer.orderDetails?.order?.number
+        
+        store.orderReducer.orderDetails
     ));
     return(
         <div className='modal-order__bottom'>

@@ -1,0 +1,27 @@
+.section{
+    margin-top: 100px;
+    width: 608px; /*TEMPORARY*/
+}
+
+.ul{
+    list-style: none;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    grid-auto-flow: column;
+}
+
+.ul li:not(:last-child){
+    margin-bottom: 8px; 
+}
+
+.ordersWrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 36px; 
+}
+
+.cyanDigits{
+    color: #00CCCC;
+}

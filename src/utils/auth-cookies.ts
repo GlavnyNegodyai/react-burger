@@ -50,6 +50,7 @@ export const removeRefreshToken  = () => {
 
 
 export const updateTokens = async () => {
+    console.log("Token invalid. Trying updating tokens...");
     try{
         const response = await fetch(`${BASE_URL}/auth/token`,
         {
@@ -63,6 +64,10 @@ export const updateTokens = async () => {
         });
 
         const data = await checkResponse(response);
+
+        if (!data.accessToken || !data.refreshToken) {
+            throw new Error("Некорректный ответ сервера при обновлении токена");
+        }
 
         const newAccessToken = data.accessToken.replace('Bearer ', '');
         const newRefreshToken = data.refreshToken;

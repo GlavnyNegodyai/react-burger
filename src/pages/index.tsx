@@ -6,4 +6,6 @@ export { default as Profile } from './profile/profile';
 export { default as Register } from './register/register';
 export { default as ResetPassword } from './reset-password/reset-password';
 export { default as ForgotPassword } from './forgot-password/forgot-password';
-export { default as Orders } from './orders/orders';
+export { default as AllOrders } from './all-orders/all-orders';
+export { default as OrderCompositionPage } from './order-composition/order-composition';
+export { default as UserOrders } from './user-orders/user-orders';

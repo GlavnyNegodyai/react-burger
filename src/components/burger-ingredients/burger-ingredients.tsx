@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { useDrag } from "react-dnd";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -35,12 +35,12 @@ const BurgerIngredientCard: FC<BurgerIngredientCardProps> = ({ingredient}) => {
     const navigate = useNavigate();
 
     const constructorItems = useSelector(
-        // @ts-ignore
+
         store => store.constructorReducer.constructorItems
     );
 
     const constructorBun = useSelector(
-        // @ts-ignore
+
         store => store.constructorReducer.constructorBun
     );
 
@@ -105,17 +105,17 @@ function ingredientsByType(allIngredients: Ingredient[], ingredientsType: string
 
 const BurgerIngredients = () => {
     const {ingredients, loading, error} = useSelector(store => ({
-        // @ts-ignore
+
         ingredients: store.ingredientsReducer.ingredients,
-        // @ts-ignore
+
         loading: store.ingredientsReducer.fetchLoading,
-        // @ts-ignore
+
         error: store.ingredientsReducer.fetchError
     }));
 
     const dispatch = useDispatch();
     useEffect(() => {
-        // @ts-ignore
+
         dispatch(fetchIngredients());
     }, [dispatch]);
 
@@ -148,7 +148,7 @@ const BurgerIngredients = () => {
     return(
         <>
             {loading && <p>Загрузка...</p>}
-            {error && <p>Ошибка: {ingredients.error}</p>}
+            {error && <p>Ошибка: {error}</p>}
             <section className='burger-ingredients'>  
                 <h1 className='burger-ingredients__headline text text_type_main-large'>Соберите бургер</h1>
                 <nav className='burger-tabs'>
