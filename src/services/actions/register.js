@@ -1,6 +1,6 @@
-import { setAccessToken, setRefreshToken } from '../../utils/auth-cookies.js';
-import { BASE_URL } from '../../utils/base-url.js';
-import { checkResponse } from '../../utils/check-response.js';
+import { setAccessToken, setRefreshToken } from '../../utils/auth-cookies';
+import { BASE_URL } from '../../utils/base-url';
+import { checkResponse } from '../../utils/check-response';
 
 export const REGISTER_POST_REQUEST = 'REGISTER_POST_REQUEST';
 export const REGISTER_POST_SUCCESS = 'REGISTER_POST_SUCCESS';

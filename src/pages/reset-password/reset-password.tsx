@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { passwordReset } from '../../services/actions/reset-password.js';
+import { passwordReset } from '../../services/actions/reset-password';
 import { useLocation, Navigate, useNavigate } from 'react-router-dom';
-import AccountInputs from '../../components/account-inputs/account-inputs.jsx';
-import AccountPrompt from '../../components/account-prompt/account-prompt.jsx';
+import AccountInputs from '../../components/account-inputs/account-inputs';
+import AccountPrompt from '../../components/account-prompt/account-prompt';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ResetPassword = () => {
@@ -14,8 +14,9 @@ const ResetPassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onButtonClick = (e) => {
+    const onButtonClick = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(passwordReset(newPassword, emailedToken, navigate));
     }
     if(!location.state || !location.state.fromForgotPassword){
@@ -34,6 +35,8 @@ const ResetPassword = () => {
                         placeholder={'Введите код из письма'}
                         value={emailedToken}
                         onChange={e => setEmailedToken(e.target.value)}
+                        onPointerEnterCapture={undefined}
+                        onPointerLeaveCapture={undefined}
                     />
                     <Button htmlType="submit">Сохранить</Button>
                 <AccountPrompt 

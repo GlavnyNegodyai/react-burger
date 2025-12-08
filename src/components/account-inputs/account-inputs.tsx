@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { FunctionComponent, ReactNode, FormEvent } from 'react';
 import './account-inputs.css';
 
-const AccountInputs = ({children, headlineText, onSubmit}) => {
+interface IAccountInputProps {
+    children?: ReactNode;
+    headlineText?: string;
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
+
+const AccountInputs: FunctionComponent<IAccountInputProps> = ({children, headlineText, onSubmit}) => {
     return (
         <section className='account-inputs-wrapper'>
             {headlineText && <h1>{headlineText}</h1>}

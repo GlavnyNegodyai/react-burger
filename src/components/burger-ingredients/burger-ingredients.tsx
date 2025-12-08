@@ -1,29 +1,52 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { useNavigate, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchIngredients } from '../../services/actions/burger-ingredients.js';
+import { fetchIngredients } from '../../services/actions/burger-ingredients';
 import './burger-ingredients.css';
 
+type Ingredient = {
+    _id: string;
+    name: string;
+    type: string;
+    proteins?: number;
+    fat?: number;
+    carbohydrates?: number;
+    calories?: number;
+    price: number;
+    image?: string;
+    image_mobile?: string;
+    image_large?: string;
+    __v?: number;
+};
 
-const BurgerIngredientCard = ({ingredient}) => {
+type BurgerIngredientCardProps = {
+    ingredient: Ingredient;
+};
+
+type DragItem = {
+    id: string;
+};
+
+const BurgerIngredientCard: FC<BurgerIngredientCardProps> = ({ingredient}) => {
     const location = useLocation();
     const {name, image, price, type, _id} = ingredient;
     const navigate = useNavigate();
 
     const constructorItems = useSelector(
+        // @ts-ignore
         store => store.constructorReducer.constructorItems
     );
 
     const constructorBun = useSelector(
+        // @ts-ignore
         store => store.constructorReducer.constructorBun
     );
 
     const handleIngredientCount = () => {
         const arrayToCount = type === 'bun' ? (constructorBun ? [constructorBun]: []) : (constructorItems || []);
-        return arrayToCount.filter(item => item._id === _id).length;
+        return arrayToCount.filter((item: Ingredient) => item._id === _id).length;
     }
 
     const onCardClick = () => {
@@ -32,14 +55,16 @@ const BurgerIngredientCard = ({ingredient}) => {
             });
     }
 
-
-    const [, dragRef] = useDrag({
+    const ingredientRef = useRef<HTMLDivElement>(null);
+    const [, dragRef] = useDrag<DragItem>({
         type: 'ingredient',
         item: { id: _id },
      });
 
+    dragRef(ingredientRef);
+    
     return(
-        <div className='ingredient-card' onClick={onCardClick} ref={dragRef}>
+        <div className='ingredient-card' onClick={onCardClick} ref={ingredientRef}>
             {handleIngredientCount() !== 0 && <Counter count={handleIngredientCount()} size="default" extraClass="m-1" />}
             <img src={image} alt={name} className='ingredient-picture'/>
             <p className='ingredient-price text text_type_digits-default p-1'>
@@ -52,12 +77,18 @@ const BurgerIngredientCard = ({ingredient}) => {
     );
 }
 
-const BurgerIngredientRow = ({ingredients, title, rowRef}) => {
+type BurgerIngredientRowProps = {
+    ingredients: Ingredient[];
+    title: string;
+    rowRef: React.RefObject<HTMLDivElement | null>;
+};
+
+const BurgerIngredientRow: FC<BurgerIngredientRowProps> = ({ingredients, title, rowRef}) => {
     return(
     <div className='ingredients-row' ref={rowRef}>
         <h2 className='ingredients-row__headline text text_type_main-medium'>{title}</h2>
         <ul className='ingredients-row__list'>
-            {ingredients.map(ingredient => (
+            {ingredients.map((ingredient: Ingredient) => (
                 <li key={String(ingredient._id)}>
                     <BurgerIngredientCard ingredient={ingredient}/>
                 </li>
@@ -67,45 +98,31 @@ const BurgerIngredientRow = ({ingredients, title, rowRef}) => {
     );
 }
 
-BurgerIngredientRow.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number,
-    })
-  ).isRequired,
-};
 
-function ingredientsByType(allIngredients, ingredientsType){
+function ingredientsByType(allIngredients: Ingredient[], ingredientsType: string){
     return allIngredients.filter(singleIngredient => singleIngredient.type === ingredientsType);
 }
 
 const BurgerIngredients = () => {
     const {ingredients, loading, error} = useSelector(store => ({
+        // @ts-ignore
         ingredients: store.ingredientsReducer.ingredients,
+        // @ts-ignore
         loading: store.ingredientsReducer.fetchLoading,
+        // @ts-ignore
         error: store.ingredientsReducer.fetchError
     }));
 
     const dispatch = useDispatch();
     useEffect(() => {
+        // @ts-ignore
         dispatch(fetchIngredients());
     }, [dispatch]);
 
-    const ingredientsRef = useRef();
-    const bunRef = useRef();
-    const SauceRef = useRef();
-    const mainRef = useRef();
+    const ingredientsRef = useRef<HTMLDivElement>(null);
+    const bunRef = useRef<HTMLDivElement>(null);
+    const SauceRef = useRef<HTMLDivElement>(null);
+    const mainRef = useRef<HTMLDivElement>(null);
 
     const bunIngredients = ingredientsByType(ingredients, 'bun');
     const mainIngredients = ingredientsByType(ingredients, 'main');
@@ -113,8 +130,8 @@ const BurgerIngredients = () => {
     const [current, setCurrent] = React.useState('Булки');
 
     const handleScroll = () => {
+        if (!ingredientsRef.current || !bunRef.current || !SauceRef.current || !mainRef.current) return;
         const containerTop = ingredientsRef.current.getBoundingClientRect().top;
-        
         const positions = [
             {type: 'Булки', position: Math.abs(bunRef.current.getBoundingClientRect().top - containerTop)},
             {type: 'Соусы', position: Math.abs(SauceRef.current.getBoundingClientRect().top - containerTop)},

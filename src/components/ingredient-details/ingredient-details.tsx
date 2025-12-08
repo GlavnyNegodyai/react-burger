@@ -1,13 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import './ingredient-details.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ADD_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details.js';
-import { fetchIngredients } from '../../services/actions/burger-ingredients.js';
+import { ADD_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
+import { fetchIngredients } from '../../services/actions/burger-ingredients';
 
 
+type IngredientMacroProps = {
+    macroName: string;
+    macroNumber: number;
+};
 
-const IngredientMacro = ({macroName, macroNumber}) => {
+type Ingredient = {
+    _id: string;
+    name: string;
+    type: string;
+    proteins?: number;
+    fat?: number;
+    carbohydrates?: number;
+    calories?: number;
+    price: number;
+    image?: string;
+    image_mobile?: string;
+    image_large?: string;
+    __v?: number;
+};
+
+const IngredientMacro: FC<IngredientMacroProps> = ({macroName, macroNumber}) => {
     return(
         <div className='modal__ingredient-macro'>
             <h4 className='modal__ingredient-macro-name pb-2'>{macroName}</h4>
@@ -22,24 +41,29 @@ const IngredientDetails = () => {
     const navigate = useNavigate();
 
     const {ingredients, loading, error} = useSelector(store => ({
+        // @ts-ignore
         ingredients: store.ingredientsReducer.ingredients,
+        // @ts-ignore
         loading: store.ingredientsReducer.fetchLoading,
+        // @ts-ignore
         error: store.ingredientsReducer.fetchError
     }));
 
     const ingredient = useSelector(store => ({
+        // @ts-ignore
         ...store.ingredientDetailsReducer.ingredient
     }));
 
     const {name, calories, proteins, fat, carbohydrates, image_large} = ingredient;
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(fetchIngredients());
     }, [dispatch]);
 
     useEffect(() => {
         if (!loading && ingredients.length > 0){
-            const ingredientByUrl = ingredients.find(ingredient => ingredient._id === id);
+            const ingredientByUrl = ingredients.find((ingredient: Ingredient) => ingredient._id === id);
             if (ingredientByUrl){
                 dispatch({type: ADD_INGREDIENT_DETAILS, payload: ingredientByUrl});
             }

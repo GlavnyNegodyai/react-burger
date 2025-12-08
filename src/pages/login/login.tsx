@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { loginUser } from '../../services/actions/login.js';
-import AccountInputs from '../../components/account-inputs/account-inputs.jsx';
-import AccountPrompt from '../../components/account-prompt/account-prompt.jsx';
+import { loginUser } from '../../services/actions/login';
+import AccountInputs from '../../components/account-inputs/account-inputs';
+import AccountPrompt from '../../components/account-prompt/account-prompt';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const Login = () => {
@@ -14,8 +14,9 @@ const Login = () => {
     const fromPage = location.state?.from?.pathname || '/';
     const navigate = useNavigate();
 
-    const handleClick = async (e) => {
+    const handleClick = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // @ts-ignore
         await dispatch(loginUser({email, password, fromPage}, navigate));
     }
 
@@ -27,6 +28,8 @@ const Login = () => {
                             placeholder={'E-mail'}
                             onChange={e => setEmail(e.target.value)}
                             value={email}
+                            onPointerEnterCapture={undefined}
+                            onPointerLeaveCapture={undefined}
                         />
                         <PasswordInput
                             placeholder={'Пароль'}

@@ -1,5 +1,5 @@
-import { BASE_URL } from '../../utils/base-url.js';
-import { checkResponse } from '../../utils/check-response.js';
+import { BASE_URL } from '../../utils/base-url';
+import { checkResponse } from '../../utils/check-response';
 
 
 export const CONSTRUCTOR_SEND_ORDER_REQUEST = 'CONSTRUCTOR_SEND_ORDER_REQUEST';

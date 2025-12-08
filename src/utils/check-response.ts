@@ -1,4 +1,9 @@
-export const checkResponse = async (res) => {
+type ServerResponseType = Response & {
+    data?: any;
+    success?: boolean;
+};
+
+export const checkResponse = async (res: ServerResponseType) => {
     if (!res.ok) {
         throw new Error(`Ошибка: ${res.status}`);
     }
