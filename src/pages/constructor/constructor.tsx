@@ -6,17 +6,14 @@ import BurgerConstructor from '../../components/burger-constructor/burger-constr
 
 import styles from './constructor.module.css';
 
-type ConstructorProps = {
-    handleModal: () => void;
-};
 
-const Constructor: FC<ConstructorProps> = ({handleModal}) => {
+const Constructor: FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
         <main className={styles.main}>
           <BurgerIngredients/>
-          <BurgerConstructor handleModal={handleModal}/>
+          <BurgerConstructor/>
         </main>
     </DndProvider>
   );

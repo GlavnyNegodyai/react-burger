@@ -32,7 +32,7 @@ const fetchSuccess = (items: TIngredient[]): TburgerIngredientsFetchSuccessActio
 const fetchError = (error: string): TburgerIngredientsFetchFailAction => ({type: BURGER_INGREDIENTS_FETCH_FAIL, payload: error});
 
 
-export const fetchIngredients: AppThunk = () => async (dispatch: AppDispatch) => {
+export const fetchIngredients: AppThunk = () => async (dispatch) => {
     dispatch(fetchRequest());
     try {
         const res = await fetch(`${BASE_URL}/ingredients`);

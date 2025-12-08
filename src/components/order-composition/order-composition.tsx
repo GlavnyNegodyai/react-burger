@@ -5,7 +5,6 @@ import { TIngredient } from "../../services/types/data";
 import "./order-composition.css";
 import { useDispatch, useSelector } from '../../services/hooks';
 import { getOrderDetails } from "../../services/actions/order-composition";
-import { fetchIngredients } from "../../services/actions/burger-ingredients";
 import {
   FormattedDate,
   CurrencyIcon,
@@ -44,10 +43,7 @@ export const OrderComposition = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    
     dispatch(getOrderDetails(id));
-    
-    dispatch(fetchIngredients());
   }, [dispatch]);
   const order = useSelector(
     

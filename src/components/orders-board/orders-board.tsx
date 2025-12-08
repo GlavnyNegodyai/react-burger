@@ -1,24 +1,15 @@
 import react, {FC} from 'react';
 import styles from './orders-board.module.css';
+import { TFeedOrder } from '../../services/types/data';
 
 
-type Order = {
-  _id: string;
-  name: string;
-  ingredients: string[];
-  status: 'created' | 'pending' | 'done';
-  number: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-type OrdersBoardProps = {
-    orders: Order[];
+type TOrdersBoardProps = {
+    orders: TFeedOrder[];
     total: number;
     totalToday: number;
 };
 
-export const OrdersBoard: FC<OrdersBoardProps> = ({orders, total, totalToday}) => {
+export const OrdersBoard: FC<TOrdersBoardProps> = ({orders, total, totalToday}) => {
     const readyOrders = orders.filter(order => order.status === "done").map(order => order.number);
     const inProcessOrders = orders.filter(order => order.status !== "done").map(order => order.number);
     return(

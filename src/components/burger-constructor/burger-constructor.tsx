@@ -27,7 +27,6 @@ type DragItem = {
 };
 
 type BurgerConstructorProps = {
-    handleModal: () => void;
 };
 
 const DraggableConstructorElement: FC<DraggableConstructorElementProps> = ({draggableIndex, ingredient}) => {
@@ -69,14 +68,13 @@ const DraggableConstructorElement: FC<DraggableConstructorElementProps> = ({drag
     )
 }
 
-const BurgerConstructor: FC<BurgerConstructorProps> = ({ handleModal }) => {
+const BurgerConstructor: FC = () => {
     const [isButtonClicked, setButtonClicked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const onModalClose = () => {
         setButtonClicked(false);
-        handleModal();
     }
 
     
@@ -104,7 +102,6 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({ handleModal }) => {
     
                 await dispatch(sendOrder());
                 setButtonClicked(true);
-                handleModal();
             }
         }
     }
@@ -123,7 +120,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({ handleModal }) => {
                 {selectedBun && <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${selectedBun.name} (низ)`}
+                    text={`${selectedBun.name} (верх)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image ?? ''}
                     extraClass='ml-8 mr-4'
@@ -138,7 +135,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({ handleModal }) => {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${selectedBun.name} (верх)`}
+                    text={`${selectedBun.name} (низ)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image ?? ''}
                     extraClass='ml-8'

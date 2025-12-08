@@ -1,4 +1,4 @@
-import { TfeedResponse } from '../types/data';
+import { TFeedOrder } from '../types/data';
 
 import {
     USER_FEED_WS_SEND,
@@ -13,7 +13,7 @@ import {
 type TinitialState = {
     wsError: string | null;
     wsConnected: boolean;
-    orders: TfeedResponse | [];
+    orders: TFeedOrder[] | [];
     total: number;
     totalToday: number;
 };

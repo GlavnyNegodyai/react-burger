@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useDispatch } from "../../services/hooks";
 import {
   Constructor,
   IngredientPage,
@@ -17,22 +18,23 @@ import AppHeader from "../app-header/app-header";
 import { IngredientModal } from "../ingredient-modal/ingredient-modal";
 import { OrderModal } from "../order-modal/order-modal";
 import { ProtectedRouteElement } from "../protected-route/protected-route";
+import { fetchIngredients } from "../../services/actions/burger-ingredients";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
   const location = useLocation();
   const state = location.state;
   const background = state && state.background;
 
-  const [isModalOpened, setModalOpened] = useState(false);
 
-  const handleModal = () => {
-    setModalOpened((prev) => !prev);
-  };
   return (
     <>
       <AppHeader />
       <Routes location={background || location}>
-        <Route path="/" element={<Constructor handleModal={handleModal} />} />
+        <Route path="/" element={<Constructor/>} />
 
         <Route
           path="/login"

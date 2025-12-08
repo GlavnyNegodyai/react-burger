@@ -1,34 +1,25 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import "./orders-feed.css";
 import { TIngredient } from "../../services/types/data";
-import { useDispatch, useSelector } from '../../services/hooks';
-import { fetchIngredients } from "../../services/actions/burger-ingredients";
+import { useSelector } from '../../services/hooks';
 import { useNavigate, useLocation } from "react-router-dom";
 import { IngredientGradient } from "../ingredient-gradient/ingredient-gradient";
 import {
   FormattedDate,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
-type Order = {
-  _id: string;
-  name: string;
-  ingredients: string[];
-  status: 'created' | 'pending' | 'done';
-  number: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { TFeedOrder } from "../../services/types/data";
 
 type OrderCardProps = {
   allIngredients: TIngredient[];
   showReadiness?: boolean; 
-  order: Order;
+  order: TFeedOrder;
 };
 
 type OrdersFeedProps = {
-  orders: Order[];
+  orders: TFeedOrder[];
   showReadiness?: boolean;
+  componentTitle?: string; 
 };
 
 const OrderFeedCard: FC<OrderCardProps> = ({ order, allIngredients, showReadiness}) => {
@@ -120,12 +111,7 @@ const OrderFeedCard: FC<OrderCardProps> = ({ order, allIngredients, showReadines
   );
 };
 
-export const OrdersFeed: FC<OrdersFeedProps> = ({ orders, showReadiness }) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    
-    dispatch(fetchIngredients());
-  }, [dispatch]);
+export const OrdersFeed: FC<OrdersFeedProps> = ({ orders, showReadiness, componentTitle }) => {
   const allIngredients = useSelector(
     
     (store) => store.ingredientsReducer.ingredients
@@ -133,9 +119,9 @@ export const OrdersFeed: FC<OrdersFeedProps> = ({ orders, showReadiness }) => {
 
   return (
     <section className="orders-feed">
-      <h1 className="text_type_main-large">Лента заказов</h1>
+      { componentTitle && <h1 className="text_type_main-large">{componentTitle}</h1>}
       <ul className="order-cards">
-        {orders.map((order, index) => (
+        {(orders || []).map((order: TFeedOrder, index: number) => (
           <OrderFeedCard
             order={order}
             allIngredients={allIngredients}

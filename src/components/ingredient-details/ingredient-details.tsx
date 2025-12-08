@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from '../../services/hooks';
 import { TIngredient } from '../../services/types/data';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ADD_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
-import { fetchIngredients } from '../../services/actions/burger-ingredients';
 
 
 type IngredientMacroProps = {
@@ -41,11 +40,6 @@ const IngredientDetails = () => {
     }));
 
     const {name, calories, proteins, fat, carbohydrates, image_large} = ingredient;
-
-    useEffect(() => {
-
-        dispatch(fetchIngredients());
-    }, [dispatch]);
 
     useEffect(() => {
         if (!loading && ingredients.length > 0){

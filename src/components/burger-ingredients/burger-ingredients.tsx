@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, FC } from 'react';
-import { useDispatch, useSelector } from '../../services/hooks';
+import React, { useRef, FC } from 'react';
+import {  useSelector } from '../../services/hooks';
 import { useDrag } from "react-dnd";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Counter, CurrencyIcon, Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import { fetchIngredients } from '../../services/actions/burger-ingredients';
 import './burger-ingredients.css';
 
 type Ingredient = {
@@ -112,12 +111,6 @@ const BurgerIngredients = () => {
 
         error: store.ingredientsReducer.fetchError
     }));
-
-    const dispatch = useDispatch();
-    useEffect(() => {
-
-        dispatch(fetchIngredients());
-    }, [dispatch]);
 
     const ingredientsRef = useRef<HTMLDivElement>(null);
     const bunRef = useRef<HTMLDivElement>(null);

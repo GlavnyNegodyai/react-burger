@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { OrdersFeed } from '../../components/orders-feed/orders-feed';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { userFeedWsActions } from '../../services/actions/user-orders-feed';
 import { ProfileMenu } from '../../components/profile-menu/profile-menu';
 import { getAccessToken } from '../../utils/auth-cookies';
@@ -15,7 +15,6 @@ const UserOrders = () => {
     };
     }, []);
     const {orders} = useSelector(store => ({
-        // @ts-ignore
         orders: store.userFeedReducer.orders
     }));
     return(

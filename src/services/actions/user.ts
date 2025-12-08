@@ -69,7 +69,7 @@ export const getUser: AppThunk = (navigate) => async (dispatch: AppDispatch) => 
         });
 
         if (retryResponse.status === 401 || response.status === 403) {
-          /*dispatch(removeUser(navigate));*/
+          dispatch(removeUser(navigate));
           return;
         }
 

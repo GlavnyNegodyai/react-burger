@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { loginUser } from '../../services/actions/login';
 import AccountInputs from '../../components/account-inputs/account-inputs';
@@ -16,7 +16,6 @@ const Login = () => {
 
     const handleClick = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // @ts-ignore
         await dispatch(loginUser({email, password, fromPage}, navigate));
     }
 
