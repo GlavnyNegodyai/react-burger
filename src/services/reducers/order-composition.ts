@@ -13,7 +13,7 @@ type TinitialState = {
     orderDetailsError: boolean;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     orderDetails: null,
     orderDetailsLoading: false,
     orderDetailsError: false

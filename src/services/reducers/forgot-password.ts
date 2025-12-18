@@ -12,7 +12,7 @@ type TinitialState = {
     forgotPasswordServerReply: string;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     isForgotPasswordLoading: false,
     forgotPasswordError: null,
     forgotPasswordServerReply: ''

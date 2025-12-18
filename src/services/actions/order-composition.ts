@@ -14,7 +14,6 @@ export type TorderDetailsRequestAction = {
 
 export type TorderDetailsFailAction = {
     readonly type: typeof ORDER_DETAILS_FAIL;
-    readonly payload: string;
 };
 
 export type TorderDetailsSuccessAction = {

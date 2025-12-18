@@ -55,7 +55,7 @@ const DraggableConstructorElement: FC<DraggableConstructorElementProps> = ({drag
 
 
     return(
-    <li ref={constructorElementRef}  className='burger-constructor__draggable-element'>
+    <li ref={constructorElementRef}  className='burger-constructor__draggable-element' data-testid="constructor-ingredient">
         <DragIcon type="primary" />
         <ConstructorElement
             text={ingredient.name}
@@ -115,17 +115,18 @@ const BurgerConstructor: FC = () => {
     }, [selectedIngredients, selectedBun]);
 
     return(
-        <section className='burger-constructor' ref={dropTargetRef}>
-            <div className='burger-constructor__undraggable-element'>
-                {selectedBun && <ConstructorElement
+        <section className='burger-constructor' ref={dropTargetRef} data-testid='constructor'>
+            {selectedBun && <div className='burger-constructor__undraggable-element' data-testid="constructor-ingredient">
+                <ConstructorElement
                     type="top"
                     isLocked={true}
                     text={`${selectedBun.name} (верх)`}
                     price={selectedBun.price}
                     thumbnail={selectedBun.image ?? ''}
                     extraClass='ml-8 mr-4'
-                />}
-            </div>
+                    
+                />
+            </div>}
             <ul className='burger-constructor__draggables-list'>
                 {(selectedIngredients || []).map((ingredient: TConstructorIngredient, index: number) => (
                     <DraggableConstructorElement key={ingredient.uid} ingredient={ingredient} draggableIndex={index}/>
@@ -146,7 +147,7 @@ const BurgerConstructor: FC = () => {
                     <span className='ingredient-price__number'>{countPrice}&nbsp;</span>
                     <CurrencyIcon type="primary" />
                 </p>
-                <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick}>
+                <Button htmlType="button" type="primary" size="medium" onClick={onButtonClick} data-testid="send-order">
                     Оформить заказ
                 </Button>
             </div>

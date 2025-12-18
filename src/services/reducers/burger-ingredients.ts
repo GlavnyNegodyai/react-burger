@@ -13,7 +13,7 @@ type TinitialState = {
     fetchError: string | null;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     ingredients: [],
     fetchLoading: false,
     fetchError: null

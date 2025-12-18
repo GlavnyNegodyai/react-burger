@@ -11,7 +11,7 @@ type TinitialState = {
     sendOrderError: string | null;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     orderDetails: null,
     sendOrderLoading: false,
     sendOrderError: null
@@ -23,7 +23,7 @@ export function orderReducer(state = initialState, action: TconstructorSendOrder
             return{
                 ...state,
                 sendOrderLoading: true,
-                sendOrderError: false
+                sendOrderError: null
             }
         }
         case CONSTRUCTOR_SEND_ORDER_FAIL: {

@@ -11,7 +11,7 @@ type TinitialState = {
     registerError: string | null;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     isRegisterLoading: false,
     registerError: null,
 };
@@ -22,7 +22,7 @@ export const registerReducer = (state = initialState, action: TregisterPostActio
             return {
                 ...state,
                 isRegisterLoading: true,
-                registerError: false,
+                registerError: null,
             }
         case REGISTER_POST_SUCCESS:
             return {

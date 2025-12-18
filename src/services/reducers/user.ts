@@ -15,7 +15,7 @@ type TinitialState = {
     userError: string | null;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     user: null,
     isUserLoading: false,
     userError: null,

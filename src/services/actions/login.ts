@@ -18,7 +18,6 @@ export type TloginPostSuccessAction = {
 
 export type TloginPostFailAction = {
     readonly type: typeof LOGIN_POST_FAIL;
-    readonly payload: string;
 };
 
 export type TloginPostActions = 
@@ -28,7 +27,7 @@ export type TloginPostActions =
 
 const loginUserRequest = (): TloginPostRequestAction => ({type: LOGIN_POST_REQUEST});
 const loginUserSuccess = (): TloginPostSuccessAction => ({type: LOGIN_POST_SUCCESS});
-const loginUserError = (error: string): TloginPostFailAction => ({type: LOGIN_POST_FAIL, payload: error});
+const loginUserError = (error: string): TloginPostFailAction => ({type: LOGIN_POST_FAIL});
 
 export const loginUser: AppThunk = ({email, password, fromPage}, navigate) => async (dispatch: AppDispatch) => {
     dispatch(loginUserRequest());

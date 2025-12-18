@@ -15,7 +15,7 @@ type TinitialState = {
     constructorBun: TConstructorIngredient | null;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     constructorItems: [],
     constructorBun: null
 };
