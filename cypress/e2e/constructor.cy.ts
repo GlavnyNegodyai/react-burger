@@ -1,25 +1,31 @@
 /// <reference types="cypress" />
+
+const constructorComponent = '[data-testid="constructor"]';
+const ingredientCard = '[data-testid="ingredient"]';
+const modalComponent = '[data-testid="modal"]';
+const sendOrderBtn = '[data-testid="send-order"]';
+
 describe("Constructor page works correctly", function () {
   beforeEach(function () {
     cy.intercept("GET", "**/ingredients").as("getIngredients");
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
     cy.wait("@getIngredients");
   });
 
   it("Конструктор открывается по дефолту при заходе на главную страницу", () => {
     cy.contains("Соберите бургер");
-    cy.get('[data-testid="ingredient"]').should("exist");
-    cy.get('[data-testid="constructor"]').should("exist");
-    cy.get('[data-testid="send-order"]').should("exist");
+    cy.get(constructorComponent).should("exist");
+    cy.get(constructorComponent).should("exist");
+    cy.get(sendOrderBtn).should("exist");
   });
 
   it("Неавторизованный пользователь перенаправляется на страницу /login, если пытается отправить заказ", () => {
-    cy.get('[data-testid="ingredient"]').drag('[data-testid="constructor"]');
-    cy.get('[data-testid="constructor"]')
+    cy.get(ingredientCard).drag(constructorComponent);
+    cy.get(constructorComponent)
       .find('[data-testid="constructor-ingredient"]')
       .should("exist");
 
-    cy.get('[data-testid="send-order"]').click();
+    cy.get(sendOrderBtn).click();
 
     cy.url().should("include", "/login");
 
@@ -41,31 +47,31 @@ describe("Constructor page works correctly", function () {
       },
     }).as("sendOrder");
 
-    cy.get('[data-testid="ingredient"]').drag('[data-testid="constructor"]');
+    cy.get(ingredientCard).drag(constructorComponent);
 
-    cy.get('[data-testid="constructor"]')
+    cy.get(constructorComponent)
       .find('[data-testid="constructor-ingredient"]')
       .should("exist");
 
-    cy.get('[data-testid="constructor"]').contains("(верх)");
-    cy.get('[data-testid="constructor"]').contains("(низ)");
+    cy.get(constructorComponent).contains("(верх)");
+    cy.get(constructorComponent).contains("(низ)");
 
-    cy.get('[data-testid="send-order"]').click();
+    cy.get(sendOrderBtn).click();
 
     cy.wait("@sendOrder");
-    cy.get('[data-testid="modal"]').should("exist");
+    cy.get(modalComponent).should("exist");
     cy.get(".modal-order__number").should("contain.text", orderNumber);
     cy.contains("идентификатор заказа").should("exist");
 
     cy.get('[data-testid="modal-close"]').click();
-    cy.get('[data-testid="modal"]').should("not.exist");
+    cy.get(modalComponent).should("not.exist");
   });
 
   it('при клике на ингредиент открывается модалка с данными о нём, при нажатии на кнопку "X" модалка закрывается', () => {
-    cy.get('[data-testid="ingredient"]').first().click();
-    cy.get('[data-testid="modal"]').should("exist");
-    cy.get('[data-testid="modal"]').contains("Детали ингредиента");
+    cy.get(ingredientCard).first().click();
+    cy.get(modalComponent).should("exist");
+    cy.get(modalComponent).contains("Детали ингредиента");
     cy.get('[data-testid="modal-close"]').click();
-    cy.get('[data-testid="modal"]').should("not.exist");
+    cy.get(modalComponent).should("not.exist");
   });
 });

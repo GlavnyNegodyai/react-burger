@@ -5,21 +5,7 @@ import
 
 import { initialState, ingredientDetailsReducer} from './ingredient-details';
 
-const ingredient = {
-  _id: "01",
-  name: "someIngr",
-  type: "ingredient",
-  proteins: 0,
-  fat: 100,
-  carbohydrates: 0,
-  calories: 0,
-  price: 1000,
-  image: "string",
-  image_mobile: "string",
-  image_large: "string",
-  __v: 1,
-  uid: "uid1",
-};
+import { ingredient1 as ingredient} from '../../jest-constants/reducer-jest-constants';
 
 describe("ingredientDetailsReducer", () => {
     it("Добавить инфу об ингредиенте и задать detailsOpened: true", ()=> {

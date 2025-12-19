@@ -6,14 +6,7 @@ import {
 
 import { initialState, orderCompositionReducer} from './order-composition';
 
-const order = { name: 'string',
-  ingredients: ['string', 'another string'],
-  _id: 'string',
-  status: 'pending' as const,
-  number: 0,
-  createdAt: 'string',
-  updatedAt: 'string'
-};
+import { testOrder as order } from "../../jest-constants/reducer-jest-constants";
 
 describe("orderCompositionReducer", () => {
   it("Должен сделать orderDetailsLoading: true, обнулить ошибки", () => {

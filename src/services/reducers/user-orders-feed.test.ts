@@ -8,6 +8,8 @@ import {
   USER_FEED_WS_SEND,
 } from "../actions/user-orders-feed";
 
+import { testOrder } from "../../jest-constants/reducer-jest-constants";
+
 describe("userFeedReducer", () => {
   it("Должен вернуть state c очищенным wsError", () => {
     const action = { type: USER_FEED_WS_INIT };
@@ -16,15 +18,7 @@ describe("userFeedReducer", () => {
       wsError: "Some error",
       wsConnected: false,
       orders: [
-        {
-          _id: "123",
-          number: 1,
-          name: "test",
-          status: "done",
-          ingredients: ["bun", "beefpatty", "bun"],
-          createdAt: "01.01.2000",
-          updatedAt: "01.01.2000",
-        },
+        testOrder,
       ],
       total: 100,
       totalToday: 10,
@@ -33,7 +27,7 @@ describe("userFeedReducer", () => {
 
     expect(newState).toEqual({
       ...prevState,
-      wsError: "",
+      wsError: null,
     });
   });
 
@@ -54,7 +48,7 @@ describe("userFeedReducer", () => {
 
     expect(newState).toEqual({
       ...initialState,
-      wsError: "",
+      wsError: null,
       wsConnected: true,
     });
   });
@@ -84,20 +78,18 @@ describe("userFeedReducer", () => {
 
 
   it("Ничего не делает (пока что)", () => {
-    const action = { type: USER_FEED_WS_SEND};
+    const action = { type: USER_FEED_WS_SEND} as any;
     const newState = userFeedReducer(initialState, action);
-
-    expect(newState).toEqual({
-      initialState
-    });
-  });
-
-  it("Ничего не делает", () => {
-    const action = { type: 'UNKNOWN_ROGUE_ACTION'};
-    const newState = userFeedReducer(initialState, action as any);
-
-    expect(newState).toBe(
+    expect(newState).toEqual(
       initialState
     );
   });
+
+  it("Ничего не делает", () => {
+    const action = { type: 'UNKNOWN_ROGUE_ACTION'} as any;
+    const newState = userFeedReducer(initialState, action);
+    expect(newState).toEqual(initialState);
+  });
+
+
 });

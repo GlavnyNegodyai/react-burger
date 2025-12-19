@@ -5,53 +5,7 @@ import {
 } from "../actions/burger-ingredients";
 import { initialState, ingredientsReducer } from "./burger-ingredients";
 
-const bun = {
-  _id: "01",
-  name: "someBun",
-  type: "bun",
-  proteins: 0,
-  fat: 100,
-  carbohydrates: 0,
-  calories: 0,
-  price: 1000,
-  image: "string",
-  image_mobile: "string",
-  image_large: "string",
-  __v: 1,
-  uid: "uid",
-};
-
-const ingredient1 = {
-  _id: "01",
-  name: "someIngr",
-  type: "ingredient",
-  proteins: 0,
-  fat: 100,
-  carbohydrates: 0,
-  calories: 0,
-  price: 1000,
-  image: "string",
-  image_mobile: "string",
-  image_large: "string",
-  __v: 1,
-  uid: "uid1",
-};
-
-const ingredient2 = {
-  _id: "02",
-  name: "someIngr2",
-  type: "ingredient",
-  proteins: 1,
-  fat: 101,
-  carbohydrates: 1,
-  calories: 1,
-  price: 1001,
-  image: "string",
-  image_mobile: "string",
-  image_large: "string",
-  __v: 2,
-  uid: "uid2",
-};
+import { ingredient1, ingredient2, bun } from "../../jest-constants/reducer-jest-constants";
 
 describe("ingredientsReducer", () => {
   it("Должен сделать fetchLoading: true", () => {

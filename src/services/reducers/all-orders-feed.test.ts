@@ -8,6 +8,8 @@ import {
   ALL_FEED_WS_SEND,
 } from "../actions/all-orders-feed";
 
+import { testOrder } from "../../jest-constants/reducer-jest-constants";
+
 describe("allFeedReducer", () => {
   it("Должен вернуть state c очищенным wsError", () => {
     const action = { type: ALL_FEED_WS_INIT };
@@ -16,15 +18,7 @@ describe("allFeedReducer", () => {
       wsError: "Some error",
       wsConnected: false,
       orders: [
-        {
-          _id: "123",
-          number: 1,
-          name: "test",
-          status: "done",
-          ingredients: ["bun", "beefpatty", "bun"],
-          createdAt: "01.01.2000",
-          updatedAt: "01.01.2000",
-        },
+        testOrder,
       ],
       total: 100,
       totalToday: 10,
@@ -87,9 +81,9 @@ describe("allFeedReducer", () => {
     const action = { type: ALL_FEED_WS_SEND};
     const newState = allFeedReducer(initialState, action);
 
-    expect(newState).toEqual({
+    expect(newState).toEqual(
       initialState
-    });
+    );
   });
 
   it("Ничего не делает", () => {
