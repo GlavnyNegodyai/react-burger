@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../services/hooks';
 import { useNavigate } from 'react-router-dom';
 import { emailPost } from '../../services/actions/forgot-password';
 import AccountInputs from '../../components/account-inputs/account-inputs';
@@ -13,7 +13,6 @@ const ForgotPassword = () => {
 
     const handleEmailSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // @ts-ignore
         dispatch(emailPost(email, navigate));
     }
 

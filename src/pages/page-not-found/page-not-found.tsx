@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
     return(
-        <main className="main--error">
+        <main>
             <section className='mt-25 error-section'>
                 <h1 className='error-message text text_type_main-large'>
                     Ошибка 404

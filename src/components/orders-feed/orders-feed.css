@@ -1,0 +1,77 @@
+.order-cards{
+    width: 100%;
+    max-height: 70vh;
+    overflow-y: scroll;
+    list-style: none;
+    padding-left: 0;
+    width: 608px; /*TEMPORARY*/
+}
+.order-card{
+    border-radius: 40px;
+    padding: 24px;
+    background-color: #1C1C21;
+}
+
+.order-card:not(:last-child){
+    margin-bottom: 24px;
+}
+
+.order-card__top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order-card__bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-card__price{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-card__ingredients{
+    list-style: none;
+    display: flex;
+    padding-left: 0;
+}
+
+.order-card__ingredient{
+    position: relative;
+}
+
+.order-card__ingredient.order-card__ingredient--more:nth-child(6)::after{
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+    content: '';
+    background-color: rgba(28, 28, 33, 0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.more-ingredients-counter{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.order-status--created{
+    color: #00CCCC;
+}
+
+.order-status--pending{
+    color: #ff0000;
+}
+
+.order-status--done{
+    color: #ffffff;
+}

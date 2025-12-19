@@ -16,7 +16,7 @@ const AppHeader = () => {
                 </div>
                 <div className='header-element'>
                     <ListIcon type='secondary' />
-                    <NavLink to="/profile/orders" className={({ isActive }) =>
+                    <NavLink to="/feed" className={({ isActive }) =>
                         `text text_type_main-default ${isActive ? "" : "text_color_inactive"}`}
                     >Лента заказов</NavLink>
                 </div>

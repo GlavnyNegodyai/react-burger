@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/actions/register';
 import AccountInputs from '../../components/account-inputs/account-inputs';
@@ -16,7 +16,6 @@ const Register = () => {
 
     const clickHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(registerUser({email, password, name}, navigate));
     }
 

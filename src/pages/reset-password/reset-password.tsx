@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../services/hooks';
 import { passwordReset } from '../../services/actions/reset-password';
 import { useLocation, Navigate, useNavigate } from 'react-router-dom';
 import AccountInputs from '../../components/account-inputs/account-inputs';
@@ -16,7 +16,6 @@ const ResetPassword = () => {
 
     const onButtonClick = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(passwordReset(newPassword, emailedToken, navigate));
     }
     if(!location.state || !location.state.fromForgotPassword){

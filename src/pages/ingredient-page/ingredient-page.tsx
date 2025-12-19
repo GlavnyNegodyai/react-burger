@@ -4,12 +4,9 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 const IngredientPage = () => {
 
     return (
-        <>
-            <main>
-                <IngredientDetails/>
-            </main>
-            
-        </>
+        <main>
+            <IngredientDetails/>
+        </main>
     );
 }
 
