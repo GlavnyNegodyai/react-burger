@@ -11,7 +11,7 @@ type TinitialState = {
     detailsOpened: boolean;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     ingredient: null,
     detailsOpened: false
 }

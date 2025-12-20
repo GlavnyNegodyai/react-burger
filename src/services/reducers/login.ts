@@ -11,7 +11,7 @@ type TinitialState = {
     loginError: boolean;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     isLoginLoading: false,
     loginError: false,
 };

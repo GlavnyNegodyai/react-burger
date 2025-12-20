@@ -63,7 +63,7 @@ const BurgerIngredientCard: FC<BurgerIngredientCardProps> = ({ingredient}) => {
     dragRef(ingredientRef);
     
     return(
-        <div className='ingredient-card' onClick={onCardClick} ref={ingredientRef}>
+        <div className='ingredient-card' onClick={onCardClick} ref={ingredientRef} data-testid='ingredient'>
             {handleIngredientCount() !== 0 && <Counter count={handleIngredientCount()} size="default" extraClass="m-1" />}
             <img src={image} alt={name} className='ingredient-picture'/>
             <p className='ingredient-price text text_type_digits-default p-1'>

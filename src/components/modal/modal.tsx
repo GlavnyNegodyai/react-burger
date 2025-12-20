@@ -41,11 +41,11 @@ const Modal: FunctionComponent<ModalProps> = ({onClose, headerText, children, is
 
   return ReactDOM.createPortal(
     <div className='modal-wrapper' onClick={handleCloseClick}>
-      <div className='modal p-10 pb-15'>
+      <div className='modal p-10 pb-15' data-testid='modal'>
         <div className='modal-content'>
           <div className='modal-top'>
               <h2 className='text text_type_main-large'>{headerText}</h2>
-              <div className='modal-close' onClick={handleCloseClick}>
+              <div className='modal-close' onClick={handleCloseClick} data-testid="modal-close">
                   <CloseIcon type='primary' />
               </div>
           </div>

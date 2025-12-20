@@ -18,7 +18,7 @@ type TinitialState = {
     totalToday: number;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     wsError: null,
     wsConnected: false,
     orders: [],
@@ -31,20 +31,20 @@ export function userFeedReducer(state = initialState, action: TuserFeedWsActions
         case USER_FEED_WS_INIT: {
             return{
                 ...state,
-                error: null
+                wsError: null
             }
         }
         case USER_FEED_WS_ERROR: {
             return{
                 ...state, 
-                error: action.payload
+                wsError: action.payload
             }
         }
         case USER_FEED_WS_OPEN: {
             return{
                 ...state, 
                 wsConnected: true,
-                error: null
+                wsError: null
             }
         }
         case USER_FEED_WS_CLOSE: {

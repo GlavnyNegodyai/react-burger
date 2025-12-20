@@ -9,7 +9,7 @@ type TinitialState = {
     resetPasswordError: string | null;
 };
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
     isResetPasswordLoading: false,
     resetPasswordError: null,
 };
