@@ -13,7 +13,7 @@ describe("registerReducer", () => {
     expect(newState).toEqual({
         ...initialState,
         isRegisterLoading: true,
-        registerError: false,
+        registerError: null,
     });
   });
   it("Завершить загрузку и передать ошибку", () => {

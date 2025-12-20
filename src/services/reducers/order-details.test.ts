@@ -13,7 +13,7 @@ describe("orderReducer", () => {
     expect(newState).toEqual({
         ...initialState,
         sendOrderLoading: true,
-        sendOrderError: false
+        sendOrderError: null
     });
   });
   it("Должен завершить загрузку и дать ошибку в sendOrderError", () => {

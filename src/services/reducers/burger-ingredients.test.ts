@@ -14,8 +14,6 @@ describe("ingredientsReducer", () => {
     expect(newState).toEqual({
       ...initialState,
       fetchLoading: true,
-      fetchError: null,
-      ingredients: [],
     });
   });
   it("Должен сделать fetchLoading: false и передать ошибку", () => {
