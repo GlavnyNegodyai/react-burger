@@ -1,46 +1,170 @@
-# Getting Started with Create React App
+react-burger
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Учебный проект космической бургерной, выполненный в рамках курса Яндекс Практикума.
 
-## Available Scripts
+Приложение позволяет собрать бургер из доступных ингредиентов, оформить заказ, зарегистрироваться и войти в аккаунт, изменить данные профиля и следить за лентой заказов в реальном времени.
 
-In the project directory, you can run:
+<img width="1848" height="823" alt="image" src="https://github.com/user-attachments/assets/c8a89c05-26f4-4b2e-b51b-38e647ae4ec1" />
 
-### `npm start`
+Demo: {в процессе}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Функциональность
+Конструктор бургера
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Пользователь может собрать собственный бургер из ингредиентов, полученных с API.
 
-### `npm test`
+Реализованы:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+добавление ингредиентов в конструктор;
+удаление ингредиентов;
+изменение порядка ингредиентов через drag and drop;
+расчет итоговой стоимости;
+оформление заказа.
+Авторизация
 
-### `npm run build`
+В приложении реализована собственная логика авторизации через API учебной платформы.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Доступны:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+регистрация;
+вход;
+выход;
+восстановление и изменение пароля;
+получение данных текущего пользователя;
+изменение данных профиля;
+защита страниц, доступных только авторизованным пользователям.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Для работы с токенами используется js-cookie.
 
-### `npm run eject`
+Заказы
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Пользователь может создавать заказы и просматривать информацию о них.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+В приложении есть:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+общая лента заказов;
+история заказов текущего пользователя;
+просмотр отдельного заказа;
+обновление списка заказов в реальном времени через WebSocket.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Общая лента и история пользователя используют отдельные WebSocket-подключения.
 
-## Learn More
+Работа с API
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Приложение получает данные с API Яндекс Практикума.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Через API выполняются:
+
+получение списка ингредиентов;
+регистрация и авторизация;
+получение данных пользователя;
+обновление данных пользователя;
+создание заказа;
+получение информации о заказах.
+
+Асинхронные действия реализованы через redux-thunk.
+
+Обработка состояний
+
+Для запросов предусмотрена обработка состояний загрузки и ошибок.
+
+Для части контента используются модальные окна, в том числе для просмотра ингредиентов и информации о заказе.
+
+Страницы
+
+В приложении реализованы:
+
+конструктор бургеров;
+общая лента заказов;
+страница отдельного заказа;
+профиль пользователя;
+история заказов пользователя;
+страницы входа и регистрации;
+восстановление и сброс пароля.
+
+Навигация реализована с помощью react-router-dom.
+
+State Management
+
+Глобальное состояние приложения построено на Redux.
+
+Redux используется для хранения и обработки:
+
+ингредиентов;
+состояния конструктора;
+данных пользователя;
+авторизации;
+заказов;
+состояний API-запросов;
+данных WebSocket-соединений.
+
+Для асинхронной логики используется redux-thunk.
+
+WebSocket
+
+Для получения заказов в реальном времени приложение устанавливает WebSocket-соединение с сервером.
+
+Через WebSocket обновляются:
+
+общая лента заказов;
+статистика заказов;
+история заказов авторизованного пользователя.
+
+Полученные данные сохраняются в Redux и автоматически обновляют интерфейс без перезагрузки страницы.
+
+Тесты
+
+В проекте используются unit- и e2e-тесты.
+
+Jest
+
+Jest используется для тестирования Redux-логики и отдельных частей приложения.
+
+npm test
+Cypress
+
+Cypress используется для проверки основных пользовательских сценариев.
+
+npm run cypress
+Stack
+React
+TypeScript
+Redux
+redux-thunk
+React Router
+WebSocket
+Jest
+Cypress
+CSS Modules
+Drag and Drop
+js-cookie
+uuid
+UI Kit Яндекс Практикума
+Запуск проекта
+
+Клонировать репозиторий:
+
+git clone https://github.com/GlavnyNegodyai/react-burger.git
+
+Перейти в директорию проекта:
+
+cd react-burger
+
+Установить зависимости:
+
+npm install
+
+Запустить приложение:
+
+npm start
+
+После запуска приложение будет доступно локально:
+
+http://localhost:3000
+Production build
+npm run build
+О проекте
+
+Проект выполнен в рамках платного курса Яндекс Практикума.
+
+Дизайн и UI Kit были предоставлены в рамках учебной программы. Основная работа в проекте была связана с React, TypeScript, Redux, маршрутизацией, API, авторизацией, WebSocket-соединениями и тестированием.
